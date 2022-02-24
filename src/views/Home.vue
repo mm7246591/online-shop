@@ -12,7 +12,7 @@
 
 <script>
 // @ is an alias to /src
-import Header from "../components/Header";
+import Header from "./Header";
 import SideBar from "./SideBar";
 import Main from "./Main";
 export default {

@@ -1,15 +1,14 @@
 <template>
-  <div>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, eaque optio,
-    nostrum est quaerat enim voluptate veritatis pariatur, consequatur
-    architecto suscipit eveniet ad ipsum officia accusamus reiciendis quia
-    perferendis harum.
-  </div>
+  <Item></Item>
 </template>
 
 <script>
+import Item from "../components/Item";
 export default {
   name: "Main",
+  components: {
+    Item,
+  },
 };
 </script>
 
