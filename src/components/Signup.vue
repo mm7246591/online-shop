@@ -1,13 +1,15 @@
 <template>
   <div class="container">
-    <div class="sign-in">
-      <span>Sign in</span>
+    <div class="sign-up">
+      <span>Sign up</span>
       <el-form>
-        <el-form-item label="帳號">
-          <el-input v-model="signInForm.username" type="text" clearable>
-            <template #prefix>
-              <i class="fa-solid fa-user"></i>
-            </template>
+        <el-form-item label="帳號" required>
+          <el-input
+            v-model="signUpForm.username"
+            type="text"
+            placeholder="username"
+            clearable
+          >
           </el-input>
           <el-alert
             :class="{ empty: isEmpty }"
@@ -18,11 +20,13 @@
           >
           </el-alert>
         </el-form-item>
-        <el-form-item label="密碼">
-          <el-input v-model="signInForm.password" type="password" show-password>
-            <template #prefix>
-              <i class="fa-solid fa-lock"></i>
-            </template>
+        <el-form-item label="密碼" required>
+          <el-input
+            v-model="signUpForm.password"
+            type="password"
+            placeholder="password"
+            show-password
+          >
           </el-input>
           <el-alert
             :class="{ empty: isEmpty }"
@@ -33,11 +37,20 @@
           >
           </el-alert>
         </el-form-item>
+        <el-form-item label="手機" required>
+          <el-input v-model="signUpForm.phone" clearable placeholder="phone">
+          </el-input>
+          <el-alert
+            :class="{ empty: isEmpty }"
+            title="請輸入手機號碼"
+            type="error"
+            show-icon
+            :closable="false"
+          >
+          </el-alert>
+        </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSignin">登入</el-button>
-          <el-button type="primary">
-            <router-link :to="{ name: 'Signup' }">註冊</router-link>
-          </el-button>
+          <el-button type="primary" @click="onSignup">送出</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -47,11 +60,16 @@
 <script>
 import { reactive, ref } from "vue";
 export default {
-  name: "Member",
+  name: "Signup",
   setup() {
     const signInForm = reactive({
       username: "",
       password: "",
+    });
+    const signUpForm = reactive({
+      username: "",
+      password: "",
+      phone: "",
     });
     const isEmpty = ref(true);
     const onSignin = () => {
@@ -59,11 +77,18 @@ export default {
         isEmpty.value = false;
       }
     };
-
-    return { signInForm, isEmpty, onSignin };
+    const onSignup = () => {
+      if (!signUpForm.username || !signUpForm.password) {
+        isEmpty.value = false;
+      } else {
+        isEmpty.value = !isEmpty.value;
+      }
+    };
+    return { signInForm, signUpForm, isEmpty, onSignin, onSignup };
   },
 };
 </script>
+
 <style scoped>
 .container {
   max-width: 1200px;
@@ -72,12 +97,14 @@ export default {
   display: flex;
   justify-content: center;
 }
-.sign-in {
+.sign-in,
+.sign-up {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.sign-in span {
+.sign-in span,
+.sign-up span {
   font-size: 30px;
   font-family: "Times New Roman", Times, serif;
   line-height: 1.3;

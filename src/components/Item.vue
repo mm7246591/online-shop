@@ -102,14 +102,32 @@
       </div>
       <div class="price">NT$1,300</div>
     </div>
+    <div class="item">
+      <div class="img">
+        <router-link to="/">
+          <img src="https://picsum.photos/id/237/250/300" alt="" />
+        </router-link>
+      </div>
+      <div class="text">
+        <router-link to="/">
+          <span>厚磅寬版刺繡TEE(男女適穿)</span>
+        </router-link>
+      </div>
+      <div class="size">
+        <span>M</span>
+      </div>
+      <div class="price">NT$1,300</div>
+    </div>
   </div>
-  <el-pagination
-    :page-size="50"
-    :pager-count="7"
-    layout="prev, pager, next"
-    :total="1000"
-  >
-  </el-pagination>
+  <div>
+    <el-pagination
+      :page-size="50"
+      :pager-count="7"
+      layout="prev, pager, next"
+      :total="1000"
+    >
+    </el-pagination>
+  </div>
 </template>
 
 <script>
@@ -131,7 +149,6 @@ export default {
   justify-items: center;
   gap: 10px;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  overflow: hidden;
 }
 .item {
   width: 250px;
