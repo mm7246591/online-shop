@@ -1,14 +1,16 @@
 <template>
-  <Home></Home>
-  <router-view />
+  <el-container>
+    <el-header><Header></Header></el-header>
+  </el-container>
+  <router-view></router-view>
 </template>
 <script>
-import Home from "./views/Home";
+import Header from "./views/Header";
 
 export default {
   name: "App",
   components: {
-    Home,
+    Header,
   },
 };
 </script>

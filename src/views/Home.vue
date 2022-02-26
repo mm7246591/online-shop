@@ -1,32 +1,21 @@
 <template>
   <el-container>
-    <el-header><Header></Header></el-header>
+    <el-aside width="200px"><SideBar></SideBar></el-aside>
     <el-container>
-      <el-aside><SideBar></SideBar></el-aside>
-      <el-container>
-        <el-main><Main></Main></el-main>
-      </el-container>
+      <el-main> <Item></Item></el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
 // @ is an alias to /src
-import Header from "./Header";
 import SideBar from "./SideBar";
-import Main from "./Main";
+import Item from "../components/Item";
 export default {
   name: "Home",
   components: {
-    Header,
     SideBar,
-    Main,
+    Item,
   },
 };
 </script>
-
-<style scoped>
-.el-container {
-  height: 100vh;
-}
-</style>

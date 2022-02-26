@@ -3,18 +3,26 @@
     <el-menu-item index="/"
       ><router-link to="/">YanShop</router-link>
     </el-menu-item>
-    <el-menu-item index="2">
-      <router-link :to="{ name: 'Main' }"> 熱銷商品 </router-link>
+    <el-menu-item index="/Item">
+      <router-link :to="{ name: 'Item' }"> 熱銷商品 </router-link>
     </el-menu-item>
-    <el-menu-item index="3">1+1折扣</el-menu-item>
-    <el-menu-item index="4">換季商品</el-menu-item>
+    <el-menu-item index="/Discount"
+      ><router-link :to="{ name: 'Discount' }">
+        1+1折扣
+      </router-link></el-menu-item
+    >
+    <el-menu-item index="4"
+      ><router-link :to="{ name: 'Season' }"
+        >換季商品</router-link
+      ></el-menu-item
+    >
     <el-menu-item index="5" class="icon">
       <i class="fa-solid fa-user"></i>
-      會員
+      <router-link :to="{ name: 'Member' }"> 會員</router-link>
     </el-menu-item>
     <el-menu-item index="6">
       <i class="fa-solid fa-cart-shopping"></i>
-      購物車
+      <router-link :to="{ name: 'Favorite' }"> 購物車</router-link>
     </el-menu-item>
   </el-menu>
 </template>
@@ -32,8 +40,11 @@ export default {
   font-family: "Times New Roman", Times, serif;
   position: relative;
 }
-.el-menu-item {
-  font-size: 20px;
+.el-menu-item:first-child {
+  font-size: 25px;
+}
+.el-menu-item:not(:first-child) {
+  font-size: 16px;
 }
 .el-menu-item > a {
   text-decoration: none;
