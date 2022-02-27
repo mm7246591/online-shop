@@ -5,14 +5,14 @@
       <el-form>
         <el-form-item label="帳號" required>
           <el-input
-            v-model="signUpForm.username"
+            v-model.trim="form.username"
             type="text"
-            placeholder="username"
+            placeholder="Username"
             clearable
           >
           </el-input>
           <el-alert
-            :class="{ empty: isEmpty }"
+            :class="{ empty: checkUsername }"
             title="請輸入帳號"
             type="error"
             show-icon
@@ -22,14 +22,14 @@
         </el-form-item>
         <el-form-item label="密碼" required>
           <el-input
-            v-model="signUpForm.password"
+            v-model.trim="form.password"
             type="password"
-            placeholder="password"
+            placeholder="Password"
             show-password
           >
           </el-input>
           <el-alert
-            :class="{ empty: isEmpty }"
+            :class="{ empty: checkPassword }"
             title="請輸入密碼"
             type="error"
             show-icon
@@ -38,10 +38,15 @@
           </el-alert>
         </el-form-item>
         <el-form-item label="手機" required>
-          <el-input v-model="signUpForm.phone" clearable placeholder="phone">
+          <el-input
+            v-model.trim="form.phone"
+            type="tel"
+            clearable
+            placeholder="Phone"
+          >
           </el-input>
           <el-alert
-            :class="{ empty: isEmpty }"
+            :class="{ empty: checkPhone }"
             title="請輸入手機號碼"
             type="error"
             show-icon
@@ -50,7 +55,7 @@
           </el-alert>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSignup">送出</el-button>
+          <el-button type="primary" @click="onSubmit">送出</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -62,29 +67,34 @@ import { reactive, ref } from "vue";
 export default {
   name: "Signup",
   setup() {
-    const signInForm = reactive({
-      username: "",
-      password: "",
-    });
-    const signUpForm = reactive({
+    const form = reactive({
       username: "",
       password: "",
       phone: "",
     });
-    const isEmpty = ref(true);
-    const onSignin = () => {
-      if (!signInForm.username || !signInForm.password) {
-        isEmpty.value = false;
-      }
-    };
-    const onSignup = () => {
-      if (!signUpForm.username || !signUpForm.password) {
-        isEmpty.value = false;
+    const checkUsername = ref(true);
+    const checkPassword = ref(true);
+    const checkPhone = ref(true);
+    const onSubmit = () => {
+      if (form.username === "") {
+        checkUsername.value = false;
+      } else if (form.password === "") {
+        checkPassword.value = false;
+      } else if (form.phone === "") {
+        checkPhone.value = false;
       } else {
-        isEmpty.value = !isEmpty.value;
+        checkUsername.value = true;
+        checkPassword.value = true;
+        checkPhone.value = true;
       }
     };
-    return { signInForm, signUpForm, isEmpty, onSignin, onSignup };
+    return {
+      form,
+      checkUsername,
+      checkPassword,
+      checkPhone,
+      onSubmit,
+    };
   },
 };
 </script>
