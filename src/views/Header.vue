@@ -11,16 +11,16 @@
         1+1折扣
       </router-link></el-menu-item
     >
-    <el-menu-item index="4"
+    <el-menu-item index="/Season"
       ><router-link :to="{ name: 'Season' }"
         >換季商品</router-link
       ></el-menu-item
     >
-    <el-menu-item index="5" class="icon">
+    <el-menu-item index="/Member" class="icon">
       <i class="fa-solid fa-user"></i>
       <router-link :to="{ name: 'Member' }"> 會員</router-link>
     </el-menu-item>
-    <el-menu-item index="6">
+    <el-menu-item index="/Favorite">
       <i class="fa-solid fa-cart-shopping"></i>
       <router-link :to="{ name: 'Favorite' }"> 購物車</router-link>
     </el-menu-item>
@@ -42,6 +42,7 @@ export default {
 }
 .el-menu-item:first-child {
   font-size: 25px;
+  font-style: italic;
 }
 .el-menu-item:not(:first-child) {
   font-size: 16px;

@@ -93,7 +93,13 @@ export default {
   height: 20px;
   padding: 6px 0;
 }
+.el-button + .el-button {
+  margin-left: 12px;
+  width: 62px;
+}
 .el-button a {
+  width: 60px;
+  line-height: 32px;
   text-decoration: none;
   color: white;
 }

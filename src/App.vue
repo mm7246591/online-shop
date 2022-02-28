@@ -1,8 +1,8 @@
 <template>
   <el-container>
     <el-header><Header></Header></el-header>
+    <router-view></router-view>
   </el-container>
-  <router-view></router-view>
 </template>
 <script>
 import Header from "./views/Header";

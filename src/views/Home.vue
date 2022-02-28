@@ -1,9 +1,7 @@
 <template>
   <el-container>
     <el-aside width="200px"><SideBar></SideBar></el-aside>
-    <el-container>
-      <el-main> <Item></Item></el-main>
-    </el-container>
+    <el-main> <Item></Item> </el-main>
   </el-container>
 </template>
 
@@ -14,8 +12,14 @@ import Item from "../components/Item";
 export default {
   name: "Home",
   components: {
-    SideBar,
     Item,
+    SideBar,
   },
 };
 </script>
+<style scoped>
+.el-main {
+  height: 100vh;
+  overflow: hidden;
+}
+</style>

@@ -119,15 +119,13 @@
       <div class="price">NT$1,300</div>
     </div>
   </div>
-  <div>
-    <el-pagination
-      :page-size="50"
-      :pager-count="7"
-      layout="prev, pager, next"
-      :total="1000"
-    >
-    </el-pagination>
-  </div>
+  <el-pagination
+    :page-size="50"
+    :pager-count="7"
+    layout="prev, pager, next"
+    :total="1000"
+  >
+  </el-pagination>
 </template>
 
 <script>
@@ -144,11 +142,11 @@ export default {
 <style scoped>
 .container {
   width: 100%;
-  height: 100%;
   display: grid;
   justify-items: center;
   gap: 10px;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-rows: 400px;
 }
 .item {
   width: 250px;
