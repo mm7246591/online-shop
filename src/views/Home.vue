@@ -1,18 +1,18 @@
 <template>
   <el-container>
     <el-aside width="200px"><SideBar></SideBar></el-aside>
-    <el-main> <Item></Item> </el-main>
+    <el-main> <Items></Items> </el-main>
   </el-container>
 </template>
 
 <script>
 // @ is an alias to /src
 import SideBar from "./SideBar";
-import Item from "../components/Item";
+import Items from "../components/Items";
 export default {
   name: "Home",
   components: {
-    Item,
+    Items,
     SideBar,
   },
 };

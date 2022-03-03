@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home";
 import Member from "../components/Member";
 import Signup from "../components/Signup";
+import Favorite from "../components/Favorite";
+
 const routes = [{
         path: "/",
         name: "Home",
@@ -35,7 +37,7 @@ const routes = [{
     {
         path: "/favorite",
         name: "Favorite",
-        component: Home,
+        component: Favorite,
     },
     {
         path: "/new",

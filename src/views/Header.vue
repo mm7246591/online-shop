@@ -22,7 +22,9 @@
     </el-menu-item>
     <el-menu-item index="/Favorite">
       <i class="fa-solid fa-cart-shopping"></i>
-      <router-link :to="{ name: 'Favorite' }"> 購物車</router-link>
+      <router-link :to="{ name: 'Favorite' }">
+        <el-badge :value="200" :max="99" class="item">購物車</el-badge>
+      </router-link>
     </el-menu-item>
   </el-menu>
 </template>

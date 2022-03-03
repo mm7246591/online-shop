@@ -14,6 +14,10 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 @import "./assets/Normalize.css";
+
+.el-header {
+  margin-top: 10px;
+}
 </style>
