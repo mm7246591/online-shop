@@ -6,15 +6,5 @@ const store = createStore({
             count: 1,
         };
     },
-    mutations: {
-        increment(state, payload) {
-            state.count += payload;
-        },
-    },
-    actions: {
-        increment({ commit }) {
-            commit("increment");
-        },
-    },
 });
 export default store;
