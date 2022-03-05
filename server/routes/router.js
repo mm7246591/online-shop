@@ -1,8 +1,16 @@
 const express = require("express");
 const router = express.Router();
-
-router.get("/item", function(req, res) {
-    res.send(req.query);
+const items = require("../module/items");
+router.get("/items", function(req, res) {
+    items.find({}, function(err, items) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send({
+                items: items,
+            });
+        }
+    });
 });
 
 router.post("/favorite", function(req, res) {

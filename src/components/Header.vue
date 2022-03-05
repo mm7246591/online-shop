@@ -3,18 +3,14 @@
     <el-menu-item index="/"
       ><router-link to="/">YanShop</router-link>
     </el-menu-item>
-    <el-menu-item index="/Item">
-      <router-link :to="{ name: 'Item' }"> 熱銷商品 </router-link>
+    <el-menu-item index="/Men">
+      <router-link :to="{ name: 'Men' }"> MEN </router-link>
     </el-menu-item>
-    <el-menu-item index="/Discount"
-      ><router-link :to="{ name: 'Discount' }">
-        1+1折扣
-      </router-link></el-menu-item
+    <el-menu-item index="/Women"
+      ><router-link :to="{ name: 'Women' }"> WOMEN </router-link></el-menu-item
     >
-    <el-menu-item index="/Season"
-      ><router-link :to="{ name: 'Season' }"
-        >換季商品</router-link
-      ></el-menu-item
+    <el-menu-item index="/Kids"
+      ><router-link :to="{ name: 'Kids' }">KIDS</router-link></el-menu-item
     >
     <el-menu-item index="/Member" class="icon">
       <i class="fa-solid fa-user"></i>
@@ -31,6 +27,7 @@
 
 <script>
 // import { ref } from "@vue/reactivity";
+
 export default {
   name: "Header",
   components: {},

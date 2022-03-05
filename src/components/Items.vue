@@ -25,85 +25,36 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
-import { useStore } from "vuex";
+import { computed, onMounted, ref } from "vue";
+import { getItems } from "../api/api";
 export default {
   name: "Item",
   setup() {
-    const store = useStore();
-    console.log(store.state);
-    const pageDate = ref([
-      {
-        id: "1",
-        name: "厚磅寬版刺繡TEE(男女適穿)",
-        size: "M",
-        price: "NT$1,300",
-        img: "https://picsum.photos/id/237/250/300",
-      },
-      {
-        id: "2",
-        name: "厚磅寬版刺繡TEE(男女適穿)",
-        size: "M",
-        price: "NT$1,300",
-        img: "https://picsum.photos/id/237/250/300",
-      },
-      {
-        id: "3",
-        name: "厚磅寬版刺繡TEE(男女適穿)",
-        size: "M",
-        price: "NT$1,300",
-        img: "https://picsum.photos/id/237/250/300",
-      },
-      {
-        id: "4",
-        name: "厚磅寬版刺繡TEE(男女適穿)",
-        size: "M",
-        price: "NT$1,300",
-        img: "https://picsum.photos/id/237/250/300",
-      },
-      {
-        id: "5",
-        name: "厚磅寬版刺繡TEE(男女適穿)",
-        size: "M",
-        price: "NT$1,300",
-        img: "https://picsum.photos/id/237/250/300",
-      },
-      {
-        id: "6",
-        name: "厚磅寬版刺繡TEE(男女適穿)",
-        size: "M",
-        price: "NT$1,300",
-        img: "https://picsum.photos/id/237/250/300",
-      },
-      {
-        id: "7",
-        name: "厚磅寬版刺繡TEE(男女適穿)",
-        size: "M",
-        price: "NT$1,300",
-        img: "https://picsum.photos/id/237/250/300",
-      },
-      {
-        id: "8",
-        name: "厚磅寬版刺繡TEE(男女適穿)",
-        size: "M",
-        price: "NT$1,300",
-        img: "https://picsum.photos/id/237/250/300",
-      },
-    ]);
+    onMounted(() => {
+      const getData = async () => {
+        try {
+          const { items } = await getItems();
+          data.value = items;
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      getData();
+    });
+    const data = ref([]);
     const page = ref(1);
     const pageSize = ref(7);
     const total = ref(14);
     const displayData = computed(() => {
-      return pageDate.value.slice(
+      return data.value.slice(
         pageSize.value * page.value - pageSize.value,
         pageSize.value * page.value
       );
     });
-
     const setPage = (val) => {
       page.value = val;
     };
-    return { store, pageDate, page, total, pageSize, displayData, setPage };
+    return { data, page, total, pageSize, displayData, setPage };
   },
 };
 </script>

@@ -5,8 +5,8 @@
         <el-menu-item index="/NewItem">
           <router-link :to="{ name: 'NewItem' }">本周新品</router-link>
         </el-menu-item>
-        <el-menu-item index="/HotStore">
-          <router-link :to="{ name: 'HotStore' }">熱銷補貨</router-link>
+        <el-menu-item index="/Hot">
+          <router-link :to="{ name: 'Hot' }">熱銷商品</router-link>
         </el-menu-item>
         <el-menu-item index="/OnSale"
           ><router-link :to="{ name: 'OnSale' }">

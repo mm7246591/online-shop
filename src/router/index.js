@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home";
-import Member from "../components/Member";
-import Signup from "../components/Signup";
-import Favorite from "../components/Favorite";
+import Men from "../views/Men";
+import Member from "../views/Member";
+import Signup from "../views/Signup";
+import Favorite from "../views/Favorite";
 
 const routes = [{
         path: "/",
@@ -10,18 +11,18 @@ const routes = [{
         component: Home,
     },
     {
-        path: "/hot",
-        name: "Item",
+        path: "/men",
+        name: "Men",
+        component: Men,
+    },
+    {
+        path: "/women",
+        name: "Women",
         component: Home,
     },
     {
-        path: "/discount",
-        name: "Discount",
-        component: Home,
-    },
-    {
-        path: "/season",
-        name: "Season",
+        path: "/kids",
+        name: "Kids",
         component: Home,
     },
     {
@@ -38,151 +39,6 @@ const routes = [{
         path: "/favorite",
         name: "Favorite",
         component: Favorite,
-    },
-    {
-        path: "/new",
-        name: "NewItem",
-        component: Home,
-    },
-    {
-        path: "/hotstore",
-        name: "HotStore",
-        component: Home,
-    },
-    {
-        path: "/onsale",
-        name: "OnSale",
-        component: Home,
-    },
-    // Tops
-    {
-        path: "/tops/shortsleeve",
-        name: "ShortSleeve",
-        component: Home,
-    },
-    {
-        path: "/tops/sleeveless",
-        name: "Sleeveless",
-        component: Home,
-    },
-    {
-        path: "/tops/longsleeveless",
-        name: "LongSleeveless",
-        component: Home,
-    },
-    {
-        path: "/tops/shirt",
-        name: "Shirt",
-        component: Home,
-    },
-    {
-        path: "/tops/hoodie",
-        name: "Hoodie",
-        component: Home,
-    },
-    {
-        path: "/tops/knitwear",
-        name: "Knitwear",
-        component: Home,
-    },
-    // Bottoms
-    {
-        path: "/bottoms/shorts",
-        name: "Shorts",
-        component: Home,
-    },
-    {
-        path: "/bottoms/jeans",
-        name: "Jeans",
-        component: Home,
-    },
-    {
-        path: "/bottoms/pants",
-        name: "Pants",
-        component: Home,
-    },
-    {
-        path: "/bottoms/anklepants",
-        name: "AnklePants",
-        component: Home,
-    },
-    {
-        path: "/bottoms/dresspants",
-        name: "DressPants",
-        component: Home,
-    },
-    {
-        path: "/bottoms/skirts",
-        name: "Skirts",
-        component: Home,
-    },
-    // One piece
-    {
-        path: "/onepiece/dresses",
-        name: "Dress",
-        component: Home,
-    },
-    {
-        path: "/onepiecs/suit",
-        name: "Suit",
-        component: Home,
-    },
-    {
-        path: "/onepiecs/jumpsuits",
-        name: "JumpSuits",
-        component: Home,
-    },
-    // Outwear
-    {
-        path: "/outwear/casual",
-        name: "Casual",
-        component: Home,
-    },
-    {
-        path: "/outwear/coat",
-        name: "Coat",
-        component: Home,
-    },
-    {
-        path: "/outwear/blazer",
-        name: "Blazer",
-        component: Home,
-    },
-    {
-        path: "/outwear/downjacket",
-        name: "DownJacket",
-        component: Home,
-    },
-    // Accessories
-    {
-        path: "/accessories/earrings",
-        name: "Earrings",
-        component: Home,
-    },
-    {
-        path: "/accessories/necklace",
-        name: "Necklace",
-        component: Home,
-    },
-    {
-        path: "/accessories/hat",
-        name: "Hat",
-        component: Home,
-    },
-    {
-        path: "/accessories/belt",
-        name: "Belt",
-        component: Home,
-    },
-    {
-        path: "/accessories/shoes",
-        name: "Shoes",
-        component: Home,
-    },
-    {
-        path: "/accessories/bags",
-        name: "Bags",
-        component: Home,
     },
 ];
 

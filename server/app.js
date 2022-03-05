@@ -2,9 +2,17 @@ const express = require("express");
 const path = require("path");
 const router = require("./routes/router");
 // connet db
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://127.0.0.1:27017/OnlineShop");
+let db = mongoose.connection;
+db.once("open", function() {
+    console.log("連接成功");
+});
+db.on("err", function(err) {
+    console.log(err);
+});
 
 const app = express();
-
 app.use(express.static(path.join(__dirname + "/public")));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
