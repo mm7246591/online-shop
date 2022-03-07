@@ -76,6 +76,7 @@ export default {
   width: 240px;
   height: 300px;
 }
+
 .item .text {
   color: #646565;
   font-size: 18px;
