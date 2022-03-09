@@ -19,12 +19,36 @@
       </el-menu></el-header
     >
   </el-container>
+  <div v-for="item of items" :key="item.id">
+    {{ item }}
+  </div>
 </template>
 
 <script>
+import { computed, onMounted } from "@vue/runtime-core";
+import { useStore, mapState } from "vuex";
+
 export default {
   name: "Favorite",
-  setup() {},
+  setup() {
+    const store = useStore();
+    const getData = () => {
+      store.dispatch("getData");
+    };
+    onMounted(() => {
+      getData();
+    });
+    const abc = computed(() => {
+      for (let i of store.state.items) {
+        console.log(i);
+      }
+      return 1223;
+    });
+    return { store, abc };
+  },
+  computed: {
+    ...mapState(["items"]),
+  },
 };
 </script>
 <style scoped>

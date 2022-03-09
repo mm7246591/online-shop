@@ -24,7 +24,7 @@
         </div>
         <el-pagination
           :page-size="pageSize"
-          :total="displayData.length"
+          :total="total"
           layout="prev, pager, next"
           @current-change="setPage"
         >
@@ -47,57 +47,63 @@ export default {
   },
   setup() {
     const store = useStore();
+    const getData = () => {
+      store.dispatch("getData");
+    };
     onMounted(() => {
       getData();
     });
-    const getData = async () => {
-      store.dispatch("getData");
-    };
     const category = ref("");
     const page = ref(1);
     const pageSize = ref(7);
     const displayData = computed(() => {
       if (category.value === "") {
-        return store.getters.menItems.slice(
+        return store.getters.kidItems.slice(
           pageSize.value * page.value - pageSize.value,
           pageSize.value * page.value
         );
       }
-      return store.getters.menItems.filter((item) =>
+      return store.getters.kidItems.filter((item) =>
         item.category.includes(category.value)
       );
     });
+    const total = computed(() => {
+      if (displayData.value.length < pageSize.value) {
+        return displayData.value.length;
+      }
+      return store.state.items.length;
+    });
     const setPage = (val) => {
+      console.log(val);
       page.value = val;
     };
     const getCategory = (val) => {
       category.value = val;
     };
     return {
-      store,
       category,
       page,
       pageSize,
       displayData,
+      total,
       setPage,
       getCategory,
     };
   },
   computed: {
     ...mapState(["items"]),
-    ...mapGetters(["menItems"]),
+    ...mapGetters(["kidItems"]),
   },
 };
 </script>
 <style scoped>
-.el-header {
-  margin-top: 10px;
-}
 .el-main {
   height: 100vh;
   overflow: hidden;
 }
-
+.el-header {
+  margin-top: 10px;
+}
 .container {
   width: 100%;
   display: grid;
@@ -109,18 +115,10 @@ export default {
 .item {
   width: 250px;
   height: 400px;
-  object-fit: cover;
-  transition: 0.9s ease-in-out;
-}
-.item .img {
-  overflow: hidden;
 }
 .img img {
   width: 240px;
   height: 300px;
-}
-.item:hover .img img {
-  transform: scale(1.1);
 }
 .item .text {
   color: #646565;

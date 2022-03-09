@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home";
 import Men from "../views/Men";
+import Women from "../views/Women";
+import Kids from "../views/Kids";
 import Member from "../views/Member";
 import Signup from "../views/Signup";
 import Favorite from "../views/Favorite";
@@ -18,12 +20,12 @@ const routes = [{
     {
         path: "/women",
         name: "Women",
-        component: Home,
+        component: Women,
     },
     {
         path: "/kids",
         name: "Kids",
-        component: Home,
+        component: Kids,
     },
     {
         path: "/member",
@@ -39,6 +41,10 @@ const routes = [{
         path: "/favorite",
         name: "Favorite",
         component: Favorite,
+    },
+    {
+        path: "/:pathMatch(.*)*",
+        redirect: "/",
     },
 ];
 

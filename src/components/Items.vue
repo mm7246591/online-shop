@@ -26,27 +26,22 @@
 
 <script>
 import { computed, onMounted, ref } from "vue";
-import { getItems } from "../api/api";
+import { useStore, mapState } from "vuex";
 export default {
   name: "Item",
   setup() {
+    const store = useStore();
     onMounted(() => {
-      const getData = async () => {
-        try {
-          const { items } = await getItems();
-          data.value = items;
-        } catch (err) {
-          console.error(err);
-        }
-      };
       getData();
     });
-    const data = ref([]);
+    const getData = () => {
+      store.dispatch("getData");
+    };
     const page = ref(1);
     const pageSize = ref(7);
     const total = ref(14);
     const displayData = computed(() => {
-      return data.value.slice(
+      return store.state.items.slice(
         pageSize.value * page.value - pageSize.value,
         pageSize.value * page.value
       );
@@ -54,7 +49,10 @@ export default {
     const setPage = (val) => {
       page.value = val;
     };
-    return { data, page, total, pageSize, displayData, setPage };
+    return { store, page, total, pageSize, displayData, setPage };
+  },
+  computed: {
+    ...mapState(["items"]),
   },
 };
 </script>

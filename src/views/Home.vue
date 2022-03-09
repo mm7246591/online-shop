@@ -2,7 +2,9 @@
   <el-container>
     <el-header><Header></Header></el-header>
     <el-container>
-      <el-aside width="200px"><SideBar></SideBar></el-aside>
+      <el-aside width="200px"
+        ><SideBar @get-category="getCategory"></SideBar
+      ></el-aside>
       <el-main
         ><div class="container">
           <div class="item" v-for="item of displayData" :key="item.id">
@@ -22,7 +24,7 @@
         </div>
         <el-pagination
           :page-size="pageSize"
-          :total="data.length"
+          :total="total"
           layout="prev, pager, next"
           @current-change="setPage"
         >
@@ -33,11 +35,10 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 import { computed, onMounted, ref } from "vue";
-import { getItems } from "../api/api";
+import { useStore, mapState } from "vuex";
 export default {
   name: "Home",
   components: {
@@ -45,30 +46,52 @@ export default {
     SideBar,
   },
   setup() {
+    const store = useStore();
+    const getData = () => {
+      store.dispatch("getData");
+    };
     onMounted(() => {
-      const getData = async () => {
-        try {
-          const { items } = await getItems();
-          data.value = items.filter((item) => item.category.includes("全部"));
-        } catch (err) {
-          console.error(err);
-        }
-      };
       getData();
     });
-    const data = ref([]);
+    const category = ref("");
     const page = ref(1);
     const pageSize = ref(7);
     const displayData = computed(() => {
-      return data.value.slice(
-        pageSize.value * page.value - pageSize.value,
-        pageSize.value * page.value
+      if (category.value === "") {
+        return store.state.items.slice(
+          pageSize.value * page.value - pageSize.value,
+          pageSize.value * page.value
+        );
+      }
+      return store.state.items.filter((item) =>
+        item.category.includes(category.value)
       );
     });
+    const total = computed(() => {
+      if (displayData.value.length < pageSize.value) {
+        return displayData.value.length;
+      }
+      return store.state.items.length;
+    });
     const setPage = (val) => {
+      console.log(val);
       page.value = val;
     };
-    return { data, page, pageSize, displayData, setPage };
+    const getCategory = (val) => {
+      category.value = val;
+    };
+    return {
+      category,
+      page,
+      pageSize,
+      displayData,
+      total,
+      setPage,
+      getCategory,
+    };
+  },
+  computed: {
+    ...mapState(["items"]),
   },
 };
 </script>

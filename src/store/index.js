@@ -4,16 +4,21 @@ const store = createStore({
     state() {
         return {
             items: [],
+            isLoading: false,
         };
     },
-    getters() {
-        (state) => {
+    getters: {
+        items: (state) => {
             return state.items;
-        };
-    },
-    mutations: {
-        GET_DATA(state, payload) {
-            state.items = payload.items;
+        },
+        menItems(state) {
+            return state.items.filter((item) => item.category.includes("男"));
+        },
+        womenItems(state) {
+            return state.items.filter((item) => item.category.includes("女"));
+        },
+        kidItems(state) {
+            return state.items.filter((item) => item.category.includes("兒童"));
         },
     },
     actions: {
@@ -23,6 +28,12 @@ const store = createStore({
             } catch (err) {
                 console.error(err);
             }
+        },
+    },
+    mutations: {
+        GET_DATA(state, payload) {
+            state.isLoading = !state.isLoading;
+            state.items = payload.items;
         },
     },
 });
