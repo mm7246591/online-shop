@@ -4,16 +4,13 @@
   </div>
 </template>
 <script>
-import { computed } from "@vue/runtime-core";
-import store from "./store";
+import { mapState } from "vuex";
 export default {
   name: "App",
   components: {},
-  setup() {
-    const isLoading = computed(() => {
-      return store.state.isLoading;
-    });
-    return { isLoading };
+  setup() {},
+  computed: {
+    ...mapState(["isLoading"]),
   },
 };
 </script>

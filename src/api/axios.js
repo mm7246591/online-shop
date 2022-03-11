@@ -28,6 +28,7 @@ export function get(url, params) {
                 params: params,
             })
             .then((res) => {
+                console.log(res);
                 resolve(res);
             })
             .catch((err) => {

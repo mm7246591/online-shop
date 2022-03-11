@@ -13,7 +13,8 @@ router.get("/items", function(req, res) {
     });
 });
 
-router.post("/favorite", function(req, res) {
-    res.send(req.body);
+router.post("/member/signup", function(req, res) {
+    console.log(req.body);
+    res.redirect("/");
 });
 module.exports = router;
