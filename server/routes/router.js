@@ -13,7 +13,7 @@ router.get("/items", function(req, res) {
     });
 });
 
-router.post("/member/signup", function(req, res) {
+router.post("/signup", function(req, res) {
     console.log(req.body);
     res.redirect("/");
 });

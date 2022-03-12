@@ -21,7 +21,7 @@
     <div class="container">
       <div class="sign-up">
         <span>Sign up</span>
-        <el-form method="POST">
+        <el-form>
           <el-form-item label="帳號" required>
             <el-input
               name="username"
@@ -132,19 +132,23 @@ export default {
         passwordLength.value = true;
         phoneLength.value = true;
       }
-      if (
-        form.password.length > 20 ||
-        (form.password.length < 8 && form.password !== "")
-      ) {
-        passwordLength.value = false;
-      }
-      if (reg.value.test(form.phone) === false) {
-        phoneLength.value = false;
-      }
+      // if (
+      //   form.password.length > 20 ||
+      //   (form.password.length < 8 && form.password !== "")
+      // ) {
+      //   passwordLength.value = false;
+      // }
+      // if (reg.value.test(form.phone) === false) {
+      //   phoneLength.value = false;
+      // }
     };
     const onSubmit = () => {
       check(form.username, form.password, form.phone);
-      getMember();
+      getMember({
+        username: form.username,
+        password: form.password,
+        phone: form.phone,
+      });
     };
     return {
       form,

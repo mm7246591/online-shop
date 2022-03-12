@@ -3,6 +3,7 @@ export function getItems() {
     return get("api/items");
 }
 
-export function getMember() {
-    return post("api/member/signup");
+export function getMember(params) {
+    console.log(params);
+    return post("api/signup", params);
 }
