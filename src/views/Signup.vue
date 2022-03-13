@@ -2,16 +2,12 @@
   <el-container>
     <el-header
       ><el-menu class="el-menu-demo" mode="horizontal">
-        <el-menu-item index="/"
-          ><router-link to="/">YanShop</router-link>
-        </el-menu-item>
+        <el-menu-item index="/"><router-link to="/">YanShop</router-link> </el-menu-item>
         <el-menu-item index="/Men">
           <router-link :to="{ name: 'Men' }"> MEN </router-link>
         </el-menu-item>
         <el-menu-item index="/Women"
-          ><router-link :to="{ name: 'Women' }">
-            WOMEN
-          </router-link></el-menu-item
+          ><router-link :to="{ name: 'Women' }"> WOMEN </router-link></el-menu-item
         >
         <el-menu-item index="/Kids"
           ><router-link :to="{ name: 'Kids' }">KIDS</router-link></el-menu-item
@@ -24,7 +20,6 @@
         <el-form>
           <el-form-item label="帳號" required>
             <el-input
-              name="username"
               v-model.trim="form.username"
               type="text"
               placeholder="Username"
@@ -42,7 +37,6 @@
           </el-form-item>
           <el-form-item label="密碼" required>
             <el-input
-              name="password"
               v-model.trim="form.password"
               type="password"
               placeholder="請輸入介於8-20位數之間密碼"
@@ -50,7 +44,7 @@
             >
             </el-input>
             <el-alert
-              :class="{ empty: passwordLength }"
+              :class="{ empty: passwordLimit }"
               title="密碼不符合規範"
               type="error"
               show-icon
@@ -67,16 +61,10 @@
             </el-alert>
           </el-form-item>
           <el-form-item label="手機" required>
-            <el-input
-              name="phone"
-              v-model.trim="form.phone"
-              type="tel"
-              clearable
-              placeholder="Phone"
-            >
+            <el-input v-model.trim="form.phone" type="tel" clearable placeholder="Phone">
             </el-input>
             <el-alert
-              :class="{ empty: phoneLength }"
+              :class="{ empty: phoneLimit }"
               title="手機號碼格式有錯"
               type="error"
               show-icon
@@ -103,7 +91,8 @@
 
 <script>
 import { reactive, ref } from "vue";
-import { getMember } from "../api/api";
+import { getMember } from "../api/api.js";
+import router from "../router";
 export default {
   name: "Signup",
   setup() {
@@ -114,10 +103,11 @@ export default {
     });
     const checkUsername = ref(true);
     const checkPassword = ref(true);
-    const passwordLength = ref(true);
+    const passwordLimit = ref(true);
+    const passwordReg = ref(/^.{6,20}$/);
     const checkPhone = ref(true);
-    const phoneLength = ref(true);
-    const reg = ref(/^09[0-9]{8}$/);
+    const phoneLimit = ref(true);
+    const phoneReg = ref(/^09[0-9]{8}$/);
     const check = (username, password, phone) => {
       if (username === "") {
         checkUsername.value = false;
@@ -129,35 +119,30 @@ export default {
         checkUsername.value = true;
         checkPassword.value = true;
         checkPhone.value = true;
-        passwordLength.value = true;
-        phoneLength.value = true;
+        passwordLimit.value = true;
+        phoneLimit.value = true;
       }
-      // if (
-      //   form.password.length > 20 ||
-      //   (form.password.length < 8 && form.password !== "")
-      // ) {
-      //   passwordLength.value = false;
+      // if (passwordReg.value.test(form.password) === false) {
+      //   passwordLimit.value = false;
       // }
-      // if (reg.value.test(form.phone) === false) {
-      //   phoneLength.value = false;
+      // if (phoneReg.value.test(form.phone) === false) {
+      //   phoneLimit.value = false;
       // }
     };
     const onSubmit = () => {
       check(form.username, form.password, form.phone);
-      getMember({
-        username: form.username,
-        password: form.password,
-        phone: form.phone,
-      });
+      getMember(form);
+      router.push("/member");
     };
     return {
       form,
       checkUsername,
       checkPassword,
-      passwordLength,
+      passwordLimit,
+      passwordReg,
       checkPhone,
-      phoneLength,
-      reg,
+      phoneLimit,
+      phoneReg,
       check,
       onSubmit,
     };

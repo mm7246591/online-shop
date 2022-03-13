@@ -1,22 +1,14 @@
 import axios from "axios";
-
 //全域性配置
 axios.defaults.timeout = 5000;
 axios.defaults.baseURL = process.env.API_ROOT;
 //攔截器
 axios.interceptors.request.use(
     (config) => {
-        config.data = JSON.stringify(config.data);
-        config.headers = {
-            // 如果沒有cors的問題則可以都不加
-            "Access-Control-Allow-Origin": process.env.API_ROOT,
-            "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
-            "Access-Control-Max-Age": "86400",
-        };
         return config;
     },
     (error) => {
-        return Promise.error(error);
+        return Promise.reject(error);
     }
 );
 axios.interceptors.response.use(
@@ -24,7 +16,7 @@ axios.interceptors.response.use(
         return response.data;
     },
     (error) => {
-        return Promise.error(error);
+        return Promise.reject(error);
     }
 );
 // get

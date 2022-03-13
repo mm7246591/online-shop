@@ -4,6 +4,5 @@ export function getItems() {
 }
 
 export function getMember(params) {
-    console.log(params);
     return post("api/signup", params);
 }

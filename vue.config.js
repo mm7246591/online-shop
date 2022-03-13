@@ -3,7 +3,7 @@ module.exports = {
         //設定完成後重啟npm
         proxy: {
             "/api": {
-                target: "http://localhost:3000/",
+                target: "http://localhost:3000",
                 ChangeOrigin: true,
                 ws: true,
                 pathRewrite: {
