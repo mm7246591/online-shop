@@ -2,9 +2,7 @@
   <el-container>
     <el-header><Header></Header></el-header>
     <el-container>
-      <el-aside width="200px"
-        ><SideBar @get-category="getCategory"></SideBar
-      ></el-aside>
+      <el-aside width="200px"><SideBar @get-category="getCategory"></SideBar></el-aside>
       <el-main
         ><div class="container">
           <div class="item" v-for="item of displayData" :key="item.id">
@@ -48,7 +46,7 @@ export default {
   setup() {
     const store = useStore();
     const getData = () => {
-      store.dispatch("getData");
+      // store.dispatch("getData");
     };
     onMounted(() => {
       getData();
@@ -63,9 +61,7 @@ export default {
           pageSize.value * page.value
         );
       }
-      return store.state.items.filter((item) =>
-        item.category.includes(category.value)
-      );
+      return store.state.items.filter((item) => item.category.includes(category.value));
     });
     const total = computed(() => {
       if (displayData.value.length < pageSize.value) {

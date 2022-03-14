@@ -4,25 +4,17 @@
     <div class="container">
       <div class="sign-up">
         <span>Sign up</span>
-        <el-form>
-          <el-form-item label="帳號" required>
+        <el-form ref="form" :rules="formRules">
+          <el-form-item label="帳號" prop="username">
             <el-input
               v-model.trim="form.username"
               type="text"
-              placeholder="Username"
+              placeholder="請輸入帳號"
               clearable
             >
             </el-input>
-            <el-alert
-              :class="{ empty: checkUsername }"
-              title="請輸入帳號"
-              type="error"
-              show-icon
-              :closable="false"
-            >
-            </el-alert>
           </el-form-item>
-          <el-form-item label="密碼" required>
+          <el-form-item label="密碼" prop="password">
             <el-input
               v-model.trim="form.password"
               type="password"
@@ -30,45 +22,18 @@
               show-password
             >
             </el-input>
-            <el-alert
-              :class="{ empty: passwordLimit }"
-              title="密碼不符合規範"
-              type="error"
-              show-icon
-              :closable="false"
-            >
-            </el-alert>
-            <el-alert
-              :class="{ empty: checkPassword }"
-              title="請輸入密碼"
-              type="error"
-              show-icon
-              :closable="false"
-            >
-            </el-alert>
           </el-form-item>
           <el-form-item label="手機" required>
-            <el-input v-model.trim="form.phone" type="tel" clearable placeholder="Phone">
+            <el-input
+              v-model.trim="form.phone"
+              type="tel"
+              clearable
+              placeholder="請輸入手機號碼"
+            >
             </el-input>
-            <el-alert
-              :class="{ empty: phoneLimit }"
-              title="手機號碼格式有錯"
-              type="error"
-              show-icon
-              :closable="false"
-            >
-            </el-alert>
-            <el-alert
-              :class="{ empty: checkPhone }"
-              title="請輸入手機號碼"
-              type="error"
-              show-icon
-              :closable="false"
-            >
-            </el-alert>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">送出</el-button>
+            <el-button type="primary" @click="onSubmit('form')">送出</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -78,6 +43,7 @@
 
 <script>
 import { reactive, ref } from "vue";
+// import validate from "validate.js";
 import { getMember } from "../api/api.js";
 import router from "../router/index.js";
 import Header from "../components/Header";
@@ -91,50 +57,56 @@ export default {
       password: "",
       phone: "",
     });
-    const checkUsername = ref(true);
-    const checkPassword = ref(true);
-    const passwordLimit = ref(true);
-    const passwordReg = ref(/^.{6,20}$/);
-    const checkPhone = ref(true);
-    const phoneLimit = ref(true);
+    const usernameReg = ref(/[a - zA - Z]/);
+    const passwordReg = ref(/^.{1,5}$/);
     const phoneReg = ref(/^09[0-9]{8}$/);
-    const checkEvent = (username, password, phone) => {
-      if (username === "") {
-        checkUsername.value = false;
-      } else if (password === "") {
-        checkPassword.value = false;
-      } else if (phone === "") {
-        checkPhone.value = false;
+    const validateUsername = (rule, value, callback) => {
+      if (!form.username) {
+        return callback(new Error("請輸入帳號"));
       } else {
-        checkUsername.value = true;
-        checkPassword.value = true;
-        checkPhone.value = true;
-        passwordLimit.value = true;
-        phoneLimit.value = true;
-        getMember(form);
-        router.push("/member");
+        if (usernameReg.value.test(form.username)) {
+          callback();
+        } else {
+          return callback(new Error("帳號格式不正確"));
+        }
       }
-      // if (passwordReg.value.test(form.password) === false) {
-      //   passwordLimit.value = false;
-      // }
-      // if (phoneReg.value.test(form.phone) === false) {
-      //   phoneLimit.value = false;
-      // }
     };
+    const validatePassword = (rule, value, callback) => {
+      if (!form.password) {
+        return callback(new Error("請輸入密碼"));
+      } else {
+        if (passwordReg.value.test(form.password)) {
+          callback();
+        } else {
+          return callback(new Error("密碼格式不正確"));
+        }
+      }
+    };
+    const validatePhone = (rule, value, callback) => {
+      if (!form.phone) {
+        return callback(new Error("請輸入手機號碼"));
+      } else {
+        if (phoneReg.value.test(form.phone)) {
+          callback();
+        } else {
+          return callback(new Error("手機號碼格式不正確"));
+        }
+      }
+    };
+    const formRules = reactive({
+      username: [{ required: true, validator: validateUsername, trigger: "blur" }],
+      password: [{ required: true, validator: validatePassword, trigger: "blur" }],
+      phone: [{ required: true, validator: validatePhone, trigger: "blur" }],
+    });
     const onSubmit = () => {
-      checkEvent(form.username, form.password, form.phone);
+      console.log(form.validator);
+      getMember(form);
+      router.push("/member");
     };
     return {
       form,
-      checkUsername,
-      checkPassword,
-      passwordLimit,
-      passwordReg,
-      checkPhone,
-      phoneLimit,
-      phoneReg,
-      checkEvent,
       onSubmit,
+      formRules,
     };
   },
 };
