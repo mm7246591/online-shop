@@ -1,23 +1,6 @@
 <template>
   <el-container>
-    <el-header
-      ><el-menu class="el-menu-demo" mode="horizontal">
-        <el-menu-item index="/"
-          ><router-link to="/">YanShop</router-link>
-        </el-menu-item>
-        <el-menu-item index="/Men">
-          <router-link :to="{ name: 'Men' }"> MEN </router-link>
-        </el-menu-item>
-        <el-menu-item index="/Women"
-          ><router-link :to="{ name: 'Women' }">
-            WOMEN
-          </router-link></el-menu-item
-        >
-        <el-menu-item index="/Kids"
-          ><router-link :to="{ name: 'Kids' }">KIDS</router-link></el-menu-item
-        >
-      </el-menu></el-header
-    >
+    <el-header><Header /></el-header>
     <div class="container">
       <div class="sign-in">
         <span>Sign in</span>
@@ -30,11 +13,7 @@
             </el-input>
           </el-form-item>
           <el-form-item label="密碼">
-            <el-input
-              v-model.trim="form.password"
-              type="password"
-              show-password
-            >
+            <el-input v-model.trim="form.password" type="password" show-password>
               <template #prefix>
                 <i class="fa-solid fa-lock"></i>
               </template>
@@ -62,15 +41,16 @@
 
 <script>
 import { reactive, ref } from "vue";
+import Header from "../components/Header";
 export default {
   name: "Member",
+  components: { Header },
   setup() {
     const form = reactive({
       username: "",
       password: "",
     });
     const check = ref(false);
-
     const onSubmit = () => {
       if (!form.username || !form.password) {
         check.value = true;
@@ -78,7 +58,6 @@ export default {
         check.value = false;
       }
     };
-
     return { form, check, onSubmit };
   },
 };

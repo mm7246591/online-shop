@@ -10,6 +10,10 @@ let onlineShopSchema = new mongoose.Schema({
     phone: {
         type: String,
     },
+    createAt: {
+        type: Date,
+        default: Date.now(),
+    },
 }, {
     versionKey: false,
 });

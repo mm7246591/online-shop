@@ -1,54 +1,15 @@
 <template>
-  <el-container>
-    <el-header
-      ><el-menu class="el-menu-demo" mode="horizontal">
-        <el-menu-item index="/"
-          ><router-link to="/">YanShop</router-link>
-        </el-menu-item>
-        <el-menu-item index="/Men">
-          <router-link :to="{ name: 'Men' }"> MEN </router-link>
-        </el-menu-item>
-        <el-menu-item index="/Women"
-          ><router-link :to="{ name: 'Women' }">
-            WOMEN
-          </router-link></el-menu-item
-        >
-        <el-menu-item index="/Kids"
-          ><router-link :to="{ name: 'Kids' }">KIDS</router-link></el-menu-item
-        >
-      </el-menu></el-header
-    >
-  </el-container>
-  <div v-for="item of items" :key="item.id">
-    {{ item }}
-  </div>
+  <el-container
+    ><el-header><Header /></el-header
+  ></el-container>
 </template>
 
 <script>
-import { computed, onMounted } from "@vue/runtime-core";
-import { useStore, mapState } from "vuex";
-
+import Header from "../components/Header";
 export default {
   name: "Favorite",
-  setup() {
-    const store = useStore();
-    const getData = () => {
-      store.dispatch("getData");
-    };
-    onMounted(() => {
-      getData();
-    });
-    const abc = computed(() => {
-      for (let i of store.state.items) {
-        console.log(i);
-      }
-      return 1223;
-    });
-    return { store, abc };
-  },
-  computed: {
-    ...mapState(["items"]),
-  },
+  components: { Header },
+  setup() {},
 };
 </script>
 <style scoped>

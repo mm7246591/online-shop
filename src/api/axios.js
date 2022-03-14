@@ -1,6 +1,6 @@
 import axios from "axios";
 //全域性配置
-axios.defaults.timeout = 5000;
+// axios.defaults.timeout = 5000;
 axios.defaults.baseURL = process.env.API_ROOT;
 //攔截器
 axios.interceptors.request.use(

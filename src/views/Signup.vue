@@ -1,19 +1,6 @@
 <template>
   <el-container>
-    <el-header
-      ><el-menu class="el-menu-demo" mode="horizontal">
-        <el-menu-item index="/"><router-link to="/">YanShop</router-link> </el-menu-item>
-        <el-menu-item index="/Men">
-          <router-link :to="{ name: 'Men' }"> MEN </router-link>
-        </el-menu-item>
-        <el-menu-item index="/Women"
-          ><router-link :to="{ name: 'Women' }"> WOMEN </router-link></el-menu-item
-        >
-        <el-menu-item index="/Kids"
-          ><router-link :to="{ name: 'Kids' }">KIDS</router-link></el-menu-item
-        >
-      </el-menu></el-header
-    >
+    <el-header><Header /></el-header>
     <div class="container">
       <div class="sign-up">
         <span>Sign up</span>
@@ -92,9 +79,12 @@
 <script>
 import { reactive, ref } from "vue";
 import { getMember } from "../api/api.js";
-import router from "../router";
+import router from "../router/index.js";
+import Header from "../components/Header";
+
 export default {
   name: "Signup",
+  components: { Header },
   setup() {
     const form = reactive({
       username: "",
@@ -108,7 +98,7 @@ export default {
     const checkPhone = ref(true);
     const phoneLimit = ref(true);
     const phoneReg = ref(/^09[0-9]{8}$/);
-    const check = (username, password, phone) => {
+    const checkEvent = (username, password, phone) => {
       if (username === "") {
         checkUsername.value = false;
       } else if (password === "") {
@@ -121,6 +111,8 @@ export default {
         checkPhone.value = true;
         passwordLimit.value = true;
         phoneLimit.value = true;
+        getMember(form);
+        router.push("/member");
       }
       // if (passwordReg.value.test(form.password) === false) {
       //   passwordLimit.value = false;
@@ -130,9 +122,7 @@ export default {
       // }
     };
     const onSubmit = () => {
-      check(form.username, form.password, form.phone);
-      getMember(form);
-      router.push("/member");
+      checkEvent(form.username, form.password, form.phone);
     };
     return {
       form,
@@ -143,7 +133,7 @@ export default {
       checkPhone,
       phoneLimit,
       phoneReg,
-      check,
+      checkEvent,
       onSubmit,
     };
   },

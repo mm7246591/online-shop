@@ -15,6 +15,12 @@ router.get("/items", function(req, res) {
 });
 
 router.post("/signup", function(req, res) {
+    Member.find({}, function(err, member) {
+        if (err) {
+            console.log(err);
+        }
+        console.log(member);
+    });
     let member = new Member({
         username: req.body.username,
         password: req.body.password,
@@ -22,9 +28,8 @@ router.post("/signup", function(req, res) {
     });
     member.save(function(err) {
         if (err) {
-            return res.status(500).json(err);
+            return res.status(500).send(err);
         }
-        return res.status(200).json();
     });
 });
 module.exports = router;
