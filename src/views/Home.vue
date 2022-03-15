@@ -46,7 +46,7 @@ export default {
   setup() {
     const store = useStore();
     const getData = () => {
-      // store.dispatch("getData");
+      store.dispatch("getData");
     };
     onMounted(() => {
       getData();

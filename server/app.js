@@ -1,5 +1,6 @@
 const express = require("express");
-const router = require("./routes/router");
+const itemRouter = require("./routes/items");
+const userRouter = require("./routes/users");
 const cors = require("cors");
 const app = express();
 
@@ -31,7 +32,8 @@ app.all("*", function(req, res, next) {
     next();
 });
 // router
-app.use("/", router);
+app.use("/", itemRouter);
+app.use("/", userRouter);
 const port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log("Server started on port 3000");

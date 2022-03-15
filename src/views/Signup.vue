@@ -4,12 +4,12 @@
     <div class="container">
       <div class="sign-up">
         <span>Sign up</span>
-        <el-form ref="form" :rules="formRules">
+        <el-form ref="ruleForm" :model="form" :rules="formRules">
           <el-form-item label="帳號" prop="username">
             <el-input
               v-model.trim="form.username"
               type="text"
-              placeholder="請輸入帳號"
+              placeholder="username"
               clearable
             >
             </el-input>
@@ -23,17 +23,12 @@
             >
             </el-input>
           </el-form-item>
-          <el-form-item label="手機" required>
-            <el-input
-              v-model.trim="form.phone"
-              type="tel"
-              clearable
-              placeholder="請輸入手機號碼"
-            >
+          <el-form-item label="手機" prop="phone">
+            <el-input v-model.trim="form.phone" type="tel" clearable placeholder="phone">
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit('form')">送出</el-button>
+            <el-button type="primary" @click="onSubmit(ruleForm)">送出</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -43,7 +38,6 @@
 
 <script>
 import { reactive, ref } from "vue";
-// import validate from "validate.js";
 import { getMember } from "../api/api.js";
 import router from "../router/index.js";
 import Header from "../components/Header";
@@ -57,7 +51,8 @@ export default {
       password: "",
       phone: "",
     });
-    const usernameReg = ref(/[a - zA - Z]/);
+    const ruleForm = ref(null);
+    const usernameReg = ref(/^[a-zA-Z0-9]+$/);
     const passwordReg = ref(/^.{1,5}$/);
     const phoneReg = ref(/^09[0-9]{8}$/);
     const validateUsername = (rule, value, callback) => {
@@ -99,14 +94,20 @@ export default {
       phone: [{ required: true, validator: validatePhone, trigger: "blur" }],
     });
     const onSubmit = () => {
-      console.log(form.validator);
-      getMember(form);
-      router.push("/member");
+      ruleForm.value.validate((valid) => {
+        if (valid) {
+          getMember(form);
+          router.push("/member");
+        } else {
+          return false;
+        }
+      });
     };
     return {
       form,
-      onSubmit,
+      ruleForm,
       formRules,
+      onSubmit,
     };
   },
 };
@@ -178,5 +179,8 @@ export default {
 }
 .el-menu-item > a {
   text-decoration: none;
+}
+.el-form-item__error {
+  font-size: 15px !important;
 }
 </style>
