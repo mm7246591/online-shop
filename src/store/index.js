@@ -47,7 +47,6 @@ const store = createStore({
     },
     mutations: {
         GET_DATA(state, payload) {
-            console.log(payload);
             state.items = payload.items;
         },
         LOADING(state, status) {
