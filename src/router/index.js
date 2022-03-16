@@ -3,7 +3,7 @@ import Home from "../views/Home";
 import Men from "../views/Men";
 import Women from "../views/Women";
 import Kids from "../views/Kids";
-import Member from "../views/Member";
+import User from "../views/User";
 import Signup from "../views/Signup";
 import Favorite from "../views/Favorite";
 
@@ -28,12 +28,12 @@ const routes = [{
         component: Kids,
     },
     {
-        path: "/member",
-        name: "Member",
-        component: Member,
+        path: "/user",
+        name: "User",
+        component: User,
     },
     {
-        path: "/signup",
+        path: "/user/signup",
         name: "Signup",
         component: Signup,
     },

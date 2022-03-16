@@ -38,7 +38,7 @@
 
 <script>
 import { reactive, ref } from "vue";
-import { getMember } from "../api/api.js";
+import { signupEvent } from "../api/api.js";
 import router from "../router/index.js";
 import Header from "../components/Header";
 
@@ -96,8 +96,8 @@ export default {
     const onSubmit = () => {
       ruleForm.value.validate((valid) => {
         if (valid) {
-          getMember(form);
-          router.push("/member");
+          signupEvent(form);
+          router.push("/user");
         } else {
           return false;
         }
@@ -139,48 +139,19 @@ export default {
   margin-bottom: 10px;
 }
 .el-form {
-  width: 350px;
+  width: 500px;
   margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .el-input {
-  width: 300px;
-}
-.fa-user,
-.fa-lock {
-  width: 15px;
-  height: 20px;
-  padding: 6px 0;
-}
-.el-alert {
-  --el-alert-padding: 0;
-  --el-alert-title-font-size: 18px;
-  margin-top: 10px;
-}
-.empty {
-  display: none;
-}
-.el-button a {
-  text-decoration: none;
-  color: white;
-}
-.el-menu {
-  font-family: "Times New Roman", Times, serif;
-  position: relative;
-}
-.el-menu-item:first-child {
-  font-size: 25px;
-  font-style: italic;
-}
-.el-menu-item:not(:first-child) {
-  font-size: 16px;
-}
-.el-menu-item > a {
-  text-decoration: none;
+  width: 350px;
 }
 .el-form-item__error {
   font-size: 15px !important;
+}
+.el-form-item--default {
+  --font-size: 18px;
 }
 </style>

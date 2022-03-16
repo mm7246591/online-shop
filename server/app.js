@@ -3,10 +3,11 @@ const itemRouter = require("./routes/items");
 const userRouter = require("./routes/users");
 const cors = require("cors");
 const app = express();
+require("dotenv").config();
 
 // connet db
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://127.0.0.1:27017/OnlineShop");
+mongoose.connect(process.env.DATABASE_URL);
 let db = mongoose.connection;
 db.once("open", function() {
     console.log("連接成功");

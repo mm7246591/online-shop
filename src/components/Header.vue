@@ -1,8 +1,6 @@
 <template>
   <el-menu class="el-menu-demo" mode="horizontal">
-    <el-menu-item index="/"
-      ><router-link to="/">YanShop</router-link>
-    </el-menu-item>
+    <el-menu-item index="/"><router-link to="/">YanShop</router-link> </el-menu-item>
     <el-menu-item index="/Men">
       <router-link :to="{ name: 'Men' }"> MEN </router-link>
     </el-menu-item>
@@ -12,9 +10,9 @@
     <el-menu-item index="/Kids"
       ><router-link :to="{ name: 'Kids' }">KIDS</router-link></el-menu-item
     >
-    <el-menu-item index="/Member" class="icon">
+    <el-menu-item index="/User" class="icon">
       <i class="fa-solid fa-user"></i>
-      <router-link :to="{ name: 'Member' }"> 會員</router-link>
+      <router-link :to="{ name: 'User' }"> 會員</router-link>
     </el-menu-item>
     <el-menu-item index="/Favorite">
       <i class="fa-solid fa-cart-shopping"></i>
