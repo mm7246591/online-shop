@@ -4,6 +4,7 @@
     <div class="container">
       <div class="sign-up">
         <span>Sign up</span>
+        <div v-for="error of errors" :key="error.msg">{{ error.msg }}</div>
         <el-form ref="ruleForm" :model="form" :rules="formRules">
           <el-form-item label="帳號" prop="username">
             <el-input
@@ -37,7 +38,8 @@
 </template>
 
 <script>
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
+import { useStore, mapState } from "vuex";
 import { signupEvent } from "../api/api.js";
 import router from "../router/index.js";
 import Header from "../components/Header";
@@ -51,6 +53,13 @@ export default {
       password: "",
       phone: "",
     });
+    const store = useStore();
+    onMounted(() => {
+      getErrors();
+    });
+    const getErrors = async () => {
+      store.dispatch("getErrors");
+    };
     const ruleForm = ref(null);
     const usernameReg = ref(/^[a-zA-Z0-9]+$/);
     const passwordReg = ref(/^.{1,5}$/);
@@ -97,7 +106,7 @@ export default {
       ruleForm.value.validate((valid) => {
         if (valid) {
           signupEvent(form);
-          router.push("/user");
+          router.push({ path: "/user" });
         } else {
           return false;
         }
@@ -109,6 +118,9 @@ export default {
       formRules,
       onSubmit,
     };
+  },
+  computed: {
+    ...mapState(["errors"]),
   },
 };
 </script>

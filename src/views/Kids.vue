@@ -2,9 +2,7 @@
   <el-container>
     <el-header><Header></Header></el-header>
     <el-container>
-      <el-aside width="200px"
-        ><SideBar @get-category="getCategory"></SideBar
-      ></el-aside>
+      <el-aside width="200px"><SideBar @get-category="getCategory"></SideBar></el-aside>
       <el-main
         ><div class="container">
           <div class="item" v-for="item of displayData" :key="item.id">
@@ -38,7 +36,7 @@
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 import { computed, onMounted, ref } from "vue";
-import { useStore, mapState, mapGetters } from "vuex";
+import { useStore, mapGetters } from "vuex";
 export default {
   name: "Home",
   components: {
@@ -91,7 +89,6 @@ export default {
     };
   },
   computed: {
-    ...mapState(["items"]),
     ...mapGetters(["kidItems"]),
   },
 };

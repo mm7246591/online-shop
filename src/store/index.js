@@ -1,23 +1,27 @@
 import { createStore } from "vuex";
-import { getItems } from "../api/api";
+import { itemsEvent, errorsEvent } from "../api/api";
 const store = createStore({
     state() {
         return {
             items: [],
+            errors: [],
             status: false,
             isLoading: false,
         };
     },
     getters: {
-        items: (state) => {
-            return state.items;
-        },
-        status: (state) => {
-            return state.status;
-        },
-        isLoading: (state) => {
-            return state.isLoading;
-        },
+        // items: (state) => {
+        //     return state.items;
+        // },
+        // status: (state) => {
+        //     return state.status;
+        // },
+        // isLoading: (state) => {
+        //     return state.isLoading;
+        // },
+        // errors: (state) => {
+        //     return state.errors;
+        // },
         menItems(state) {
             return state.items.filter((item) => item.category.includes("男"));
         },
@@ -32,10 +36,17 @@ const store = createStore({
         async getData({ commit }) {
             commit("LOADING", true);
             try {
-                commit("GET_DATA", await getItems());
+                commit("GET_DATA", await itemsEvent());
                 await setTimeout(() => {
                     commit("LOADING", false);
                 }, 500);
+            } catch (err) {
+                console.error(err);
+            }
+        },
+        async getErrors({ commit }) {
+            try {
+                commit("GET_ERRORS", await errorsEvent());
             } catch (err) {
                 console.error(err);
             }
@@ -48,6 +59,9 @@ const store = createStore({
     mutations: {
         GET_DATA(state, payload) {
             state.items = payload.items;
+        },
+        GET_ERRORS(state, payload) {
+            state.errors = payload;
         },
         LOADING(state, status) {
             state.isLoading = status;
