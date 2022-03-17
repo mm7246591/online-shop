@@ -61,6 +61,7 @@ const store = createStore({
             state.items = payload.items;
         },
         GET_ERRORS(state, payload) {
+            console.log(payload);
             state.errors = payload;
         },
         LOADING(state, status) {

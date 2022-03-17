@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref } from "vue";
 import { useStore, mapState } from "vuex";
 import { signupEvent } from "../api/api.js";
 import router from "../router/index.js";
@@ -54,9 +54,6 @@ export default {
       phone: "",
     });
     const store = useStore();
-    onMounted(() => {
-      getErrors();
-    });
     const getErrors = async () => {
       store.dispatch("getErrors");
     };
@@ -106,6 +103,7 @@ export default {
       ruleForm.value.validate((valid) => {
         if (valid) {
           signupEvent(form);
+          getErrors();
           router.push({ path: "/user" });
         } else {
           return false;
