@@ -4,6 +4,9 @@
     <div class="container">
       <div class="sign-up">
         <span>Sign up</span>
+        <div v-if="message">
+          {{ message }}
+        </div>
         <div v-for="error of errors" :key="error.msg">{{ error.msg }}</div>
         <el-form ref="ruleForm" :model="form" :rules="formRules">
           <el-form-item label="帳號" prop="username">
@@ -39,9 +42,10 @@
 
 <script>
 import { reactive, ref } from "vue";
-import { useStore, mapState } from "vuex";
-import { signupEvent } from "../api/api.js";
-import router from "../router/index.js";
+import { mapState } from "vuex";
+// import { signupEvent } from "../api/api.js";
+import axios from "axios";
+// import router from "../router/index.js";
 import Header from "../components/Header";
 
 export default {
@@ -53,10 +57,10 @@ export default {
       password: "",
       phone: "",
     });
-    const store = useStore();
-    const getErrors = async () => {
-      store.dispatch("getErrors");
-    };
+    // const store = useStore();
+    // const checkError = async () => {
+    //   store.dispatch("checkError");
+    // };
     const ruleForm = ref(null);
     const usernameReg = ref(/^[a-zA-Z0-9]+$/);
     const passwordReg = ref(/^.{1,5}$/);
@@ -99,15 +103,26 @@ export default {
       password: [{ required: true, validator: validatePassword, trigger: "blur" }],
       phone: [{ required: true, validator: validatePhone, trigger: "blur" }],
     });
-    const onSubmit = () => {
-      ruleForm.value.validate((valid) => {
+    const onSubmit = async () => {
+      await ruleForm.value.validate((valid) => {
         if (valid) {
-          signupEvent(form);
-          getErrors();
-          router.push({ path: "/user" });
-        } else {
-          return false;
+          axios
+            .post("/api+user/signup", form)
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((error) => {
+              console.log(error.response.data);
+            });
+          // signupEvent(form);
+          // checkError();
         }
+        // if (store.state.message === "此帳號已經有人使用") {
+        //   return false;
+        // }
+        // if (store.state.message === null) {
+        //   // router.push({ path: "/user" });
+        // }
       });
     };
     return {
@@ -118,7 +133,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["errors"]),
+    ...mapState(["errors", "status", "message"]),
   },
 };
 </script>

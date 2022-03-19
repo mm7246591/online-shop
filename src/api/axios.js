@@ -30,6 +30,7 @@ export function get(url, params) {
                 resolve(res);
             })
             .catch((err) => {
+                console.log(err);
                 reject(err);
             });
     });
@@ -40,9 +41,11 @@ export function post(url, params) {
         axios
             .post(url, params)
             .then((res) => {
+                console.log(res);
                 resolve(res.data);
             })
             .catch((err) => {
+                console.log(err.response);
                 reject(err.data);
             });
     });

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 let UserSchema = new mongoose.Schema({
     username: {
         type: String,
-        unique: true,
+        // unique: true,
         required: true,
     },
     password: {
@@ -15,7 +15,6 @@ let UserSchema = new mongoose.Schema({
     },
     createAt: {
         type: Date,
-        required: true,
         default: Date.now(),
     },
 }, {

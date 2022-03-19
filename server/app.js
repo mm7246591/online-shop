@@ -6,12 +6,13 @@ const cors = require("cors");
 const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const flash = require("connect-flash");
+const path = require("path");
 const app = express();
 require("dotenv").config();
 
 // connet db
 const mongoose = require("mongoose");
-mongoose.connect(process.env.DATABASE_URL);
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 let db = mongoose.connection;
 db.once("open", function() {
     console.log("連接成功");
@@ -28,9 +29,11 @@ app.use(
         saveUninitialized: "false",
     })
 );
+// setup the static directory
+app.use(express.static(path.join(__dirname, "public")));
 // PassportMiddleware
 app.use(passport.initialize());
-app.use(passport.session());
+require("./config/passport")(passport);
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -54,7 +57,7 @@ app.use(flash());
 
 // router
 app.use("/", itemRouter);
-app.use("/", userRouter);
+app.use("/user", userRouter);
 const port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log("Server started on port 3000");

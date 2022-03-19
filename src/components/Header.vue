@@ -12,7 +12,7 @@
     >
     <el-menu-item index="/User" class="icon">
       <i class="fa-solid fa-user"></i>
-      <router-link :to="{ name: 'User' }"> 會員</router-link>
+      <router-link :to="{ name: 'User' }">登入</router-link>
     </el-menu-item>
     <el-menu-item index="/Favorite">
       <i class="fa-solid fa-cart-shopping"></i>

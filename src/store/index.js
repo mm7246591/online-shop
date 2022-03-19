@@ -4,24 +4,12 @@ const store = createStore({
     state() {
         return {
             items: [],
-            errors: [],
+            message: null,
             status: false,
             isLoading: false,
         };
     },
     getters: {
-        // items: (state) => {
-        //     return state.items;
-        // },
-        // status: (state) => {
-        //     return state.status;
-        // },
-        // isLoading: (state) => {
-        //     return state.isLoading;
-        // },
-        // errors: (state) => {
-        //     return state.errors;
-        // },
         menItems(state) {
             return state.items.filter((item) => item.category.includes("男"));
         },
@@ -44,25 +32,21 @@ const store = createStore({
                 console.error(err);
             }
         },
-        async getErrors({ commit }) {
+        async checkError({ commit }) {
             try {
-                commit("GET_ERRORS", await errorsEvent());
+                commit("CHECK_ERROR", await errorsEvent());
             } catch (err) {
-                console.error(err);
+                // console.error(err);
             }
-        },
-
-        updateLoading({ commit }) {
-            commit("LOADING", store.state);
         },
     },
     mutations: {
         GET_DATA(state, payload) {
             state.items = payload.items;
         },
-        GET_ERRORS(state, payload) {
-            console.log(payload);
-            state.errors = payload;
+        CHECK_ERROR(state, payload) {
+            state.status = true;
+            state.message = payload.message;
         },
         LOADING(state, status) {
             state.isLoading = status;
