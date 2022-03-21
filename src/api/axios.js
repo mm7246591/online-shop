@@ -1,10 +1,14 @@
 import axios from "axios";
+import router from "../router";
 //全域性配置
 // axios.defaults.timeout = 5000;
-axios.defaults.baseURL = process.env.API_ROOT;
+// axios.defaults.baseURL = process.env.API_ROOT;
 //攔截器
 axios.interceptors.request.use(
     (config) => {
+        if (localStorage.getItem("Authorization")) {
+            config.headers.Authorization = localStorage.getItem("Authorization");
+        }
         return config;
     },
     (error) => {
@@ -16,6 +20,10 @@ axios.interceptors.response.use(
         return response.data;
     },
     (error) => {
+        if (error.response.status === 401) {
+            localStorage.removeItem("Authorization");
+            router.push("/user/signin");
+        }
         return Promise.reject(error);
     }
 );
@@ -41,12 +49,11 @@ export function post(url, params) {
         axios
             .post(url, params)
             .then((res) => {
-                console.log(res);
-                resolve(res.data);
+                resolve(res);
             })
             .catch((err) => {
-                console.log(err.response);
-                reject(err.data);
+                const { message } = err.response.data;
+                reject(message);
             });
     });
 }

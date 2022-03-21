@@ -33,11 +33,11 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import Header from "../components/Header";
-import SideBar from "../components/SideBar";
 import { computed, onMounted, ref } from "vue";
 import { useStore, mapGetters } from "vuex";
+import Header from "../components/Header";
+import SideBar from "../components/SideBar";
+
 export default {
   name: "Home",
   components: {

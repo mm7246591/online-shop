@@ -5,7 +5,6 @@ const userRouter = require("./routes/users");
 const cors = require("cors");
 const MongoStore = require("connect-mongo");
 const passport = require("passport");
-const flash = require("connect-flash");
 const path = require("path");
 const app = express();
 require("dotenv").config();
@@ -23,7 +22,7 @@ db.on("err", function(err) {
 // session
 app.use(
     session({
-        secret: process.env.session_secret,
+        secret: process.env.JWT_SECRET,
         store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL }),
         resave: "false",
         saveUninitialized: "false",
@@ -51,9 +50,6 @@ app.all("*", function(req, res, next) {
     res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
     next();
 });
-
-// error message
-app.use(flash());
 
 // router
 app.use("/", itemRouter);

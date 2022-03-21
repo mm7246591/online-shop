@@ -3,7 +3,7 @@ import Home from "../views/Home";
 import Men from "../views/Men";
 import Women from "../views/Women";
 import Kids from "../views/Kids";
-import User from "../views/User";
+import Signin from "../views/Signin";
 import Signup from "../views/Signup";
 import Favorite from "../views/Favorite";
 
@@ -28,9 +28,9 @@ const routes = [{
         component: Kids,
     },
     {
-        path: "/user",
-        name: "User",
-        component: User,
+        path: "/user/signin",
+        name: "Signin",
+        component: Signin,
     },
     {
         path: "/user/signup",
@@ -52,5 +52,11 @@ const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
 });
-
+router.beforeEach(() => {
+    // let token = localStorage.getItem("Authorization");
+    // console.log(token);
+    // if (to.name !== "Signin" && !token) {
+    //     return { name: "Signin" };
+    // }
+});
 export default router;

@@ -33,10 +33,11 @@
 </template>
 
 <script>
-import Header from "../components/Header";
-import SideBar from "../components/SideBar";
 import { computed, onMounted, ref } from "vue";
 import { useStore, mapState } from "vuex";
+import Header from "../components/Header";
+import SideBar from "../components/SideBar";
+
 export default {
   name: "Home",
   components: {

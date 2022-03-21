@@ -2,17 +2,26 @@
   <el-container>
     <el-header><Header /></el-header>
     <div class="container">
-      <div class="sign-in">
+      <div class="signIn">
         <span>Sign in</span>
-        <el-form>
-          <el-form-item label="帳號">
+        <div v-if="signInMessage">
+          <el-alert
+            :title="signInMessage"
+            type="error"
+            center
+            show-icon
+            :closable="false"
+          />
+        </div>
+        <el-form ref="ruleForm" :model="form" :rules="formRules">
+          <el-form-item label="帳號" prop="username">
             <el-input v-model.trim="form.username" type="text" clearable>
               <template #prefix>
                 <i class="fa-solid fa-user"></i>
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item label="密碼">
+          <el-form-item label="密碼" prop="password">
             <el-input v-model.trim="form.password" type="password" show-password>
               <template #prefix>
                 <i class="fa-solid fa-lock"></i>
@@ -20,20 +29,12 @@
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">登入</el-button>
+            <el-button type="primary" @click="onSubmit(ruleForm)">登入</el-button>
             <el-button type="primary">
               <router-link :to="{ name: 'Signup' }">註冊</router-link>
             </el-button>
           </el-form-item>
         </el-form>
-        <el-dialog v-model="check" width="500px" center :show-close="false">
-          <p>帳號或密碼未輸入</p>
-          <template #footer>
-            <span class="dialog-footer">
-              <el-button type="primary" @click="check = false">確認</el-button>
-            </span>
-          </template>
-        </el-dialog>
       </div>
     </div>
   </el-container>
@@ -41,7 +42,11 @@
 
 <script>
 import { reactive, ref } from "vue";
+import { signinEvent } from "../api/api.js";
+import { useStore, mapState } from "vuex";
+import router from "../router/index.js";
 import Header from "../components/Header";
+
 export default {
   name: "Member",
   components: { Header },
@@ -50,15 +55,38 @@ export default {
       username: "",
       password: "",
     });
-    const check = ref(false);
-    const onSubmit = () => {
-      if (!form.username || !form.password) {
-        check.value = true;
-      } else {
-        check.value = false;
-      }
+    const store = useStore();
+    const ruleForm = ref(null);
+    const formRules = reactive({
+      username: [{ required: true, message: "請輸入帳號", trigger: "blur" }],
+      password: [{ required: true, message: "請輸入密碼", trigger: "blur" }],
+    });
+
+    const onSubmit = async () => {
+      await ruleForm.value.validate((valid) => {
+        if (valid) {
+          signinEvent(form)
+            .then((res) => {
+              const { status, token, username } = res;
+              store.state.status = status;
+              store.state.username = username;
+              store.commit("GET_TOKEN", token);
+              router.push("/");
+            })
+            .catch((err) => {
+              store.state.signInMessage = err;
+              form.username = "";
+              form.password = "";
+            });
+        } else {
+          return false;
+        }
+      });
     };
-    return { form, check, onSubmit };
+    return { form, formRules, ruleForm, onSubmit };
+  },
+  computed: {
+    ...mapState(["signInMessage"]),
   },
 };
 </script>
@@ -73,12 +101,12 @@ export default {
   display: flex;
   justify-content: center;
 }
-.sign-in {
+.signIn {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.sign-in span {
+.signIn span {
   font-size: 30px;
   font-family: "Times New Roman", Times, serif;
   line-height: 1.3;
@@ -109,27 +137,8 @@ export default {
   text-decoration: none;
   color: white;
 }
-.el-dialog__body > p {
-  text-align: center;
-  color: red;
-  font-size: 30px;
-  margin: 0;
-}
-.dialog-footer button:first-child {
-  margin-right: 10px;
-}
-.el-menu {
-  font-family: "Times New Roman", Times, serif;
-  position: relative;
-}
-.el-menu-item:first-child {
-  font-size: 25px;
-  font-style: italic;
-}
-.el-menu-item:not(:first-child) {
-  font-size: 16px;
-}
-.el-menu-item > a {
-  text-decoration: none;
+.el-alert {
+  --el-alert-title-font-size: 18px;
+  margin-bottom: 10px;
 }
 </style>

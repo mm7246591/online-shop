@@ -1,12 +1,17 @@
 import { createStore } from "vuex";
-import { itemsEvent, errorsEvent } from "../api/api";
+import { itemsEvent } from "../api/api";
 const store = createStore({
     state() {
         return {
             items: [],
-            message: null,
+            signUpMessage: null,
+            signInMessage: null,
             status: false,
             isLoading: false,
+            username: null,
+            Authorization: localStorage.getItem("Authorization") ?
+                localStorage.getItem("Authorization") :
+                null,
         };
     },
     getters: {
@@ -32,27 +37,17 @@ const store = createStore({
                 console.error(err);
             }
         },
-        async checkError({ commit }) {
-            try {
-                commit("CHECK_ERROR", await errorsEvent());
-            } catch (err) {
-                // console.error(err);
-            }
-        },
     },
     mutations: {
         GET_DATA(state, payload) {
             state.items = payload.items;
         },
-        CHECK_ERROR(state, payload) {
-            state.status = true;
-            state.message = payload.message;
-        },
         LOADING(state, status) {
             state.isLoading = status;
         },
-        STATUS(state, payload) {
-            state.status = payload;
+        GET_TOKEN(state, payload) {
+            state.Authorization = payload;
+            localStorage.setItem("Authorization", payload);
         },
     },
 });

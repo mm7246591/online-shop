@@ -10,9 +10,11 @@
     <el-menu-item index="/Kids"
       ><router-link :to="{ name: 'Kids' }">KIDS</router-link></el-menu-item
     >
-    <el-menu-item index="/User" class="icon">
+    <el-menu-item index="/Signin" class="icon">
       <i class="fa-solid fa-user"></i>
-      <router-link :to="{ name: 'User' }">登入</router-link>
+      <router-link :to="{ name: 'Signin' }">
+        <span :checkUser="checkUser">{{ username }}</span>
+      </router-link>
     </el-menu-item>
     <el-menu-item index="/Favorite">
       <i class="fa-solid fa-cart-shopping"></i>
@@ -24,12 +26,24 @@
 </template>
 
 <script>
-// import { ref } from "@vue/reactivity";
+import { computed } from "@vue/runtime-core";
+import { mapState, useStore } from "vuex";
 
 export default {
   name: "Header",
   components: {},
-  setup() {},
+  setup() {
+    const store = useStore();
+    const checkUser = computed(() => {
+      return !store.state.username
+        ? (store.state.username = "登入")
+        : store.state.username;
+    });
+    return { store, checkUser };
+  },
+  computed: {
+    ...mapState(["username"]),
+  },
 };
 </script>
 <style scoped>
@@ -42,7 +56,7 @@ export default {
   font-style: italic;
 }
 .el-menu-item:not(:first-child) {
-  font-size: 16px;
+  font-size: 18px;
 }
 .el-menu-item > a {
   text-decoration: none;

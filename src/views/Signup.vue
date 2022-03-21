@@ -2,12 +2,17 @@
   <el-container>
     <el-header><Header /></el-header>
     <div class="container">
-      <div class="sign-up">
+      <div class="signUp">
         <span>Sign up</span>
-        <div v-if="message">
-          {{ message }}
+        <div v-if="signUpMessage">
+          <el-alert
+            :title="signUpMessage"
+            type="error"
+            center
+            show-icon
+            :closable="false"
+          />
         </div>
-        <div v-for="error of errors" :key="error.msg">{{ error.msg }}</div>
         <el-form ref="ruleForm" :model="form" :rules="formRules">
           <el-form-item label="帳號" prop="username">
             <el-input
@@ -42,11 +47,10 @@
 
 <script>
 import { reactive, ref } from "vue";
-import { mapState } from "vuex";
-// import { signupEvent } from "../api/api.js";
-import axios from "axios";
-// import router from "../router/index.js";
+import { mapState, useStore } from "vuex";
+import { signupEvent } from "../api/api.js";
 import Header from "../components/Header";
+import router from "../router/index.js";
 
 export default {
   name: "Signup",
@@ -57,10 +61,7 @@ export default {
       password: "",
       phone: "",
     });
-    // const store = useStore();
-    // const checkError = async () => {
-    //   store.dispatch("checkError");
-    // };
+    const store = useStore();
     const ruleForm = ref(null);
     const usernameReg = ref(/^[a-zA-Z0-9]+$/);
     const passwordReg = ref(/^.{1,5}$/);
@@ -106,23 +107,22 @@ export default {
     const onSubmit = async () => {
       await ruleForm.value.validate((valid) => {
         if (valid) {
-          axios
-            .post("/api+user/signup", form)
+          signupEvent(form)
             .then((res) => {
-              console.log(res.data);
+              const { success } = res;
+              if (success) {
+                router.push("/user");
+              }
             })
-            .catch((error) => {
-              console.log(error.response.data);
+            .catch((err) => {
+              if (err) {
+                store.state.signUpMessage = err;
+                form.username = "";
+                form.password = "";
+                form.phone = "";
+              }
             });
-          // signupEvent(form);
-          // checkError();
         }
-        // if (store.state.message === "此帳號已經有人使用") {
-        //   return false;
-        // }
-        // if (store.state.message === null) {
-        //   // router.push({ path: "/user" });
-        // }
       });
     };
     return {
@@ -133,7 +133,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["errors", "status", "message"]),
+    ...mapState(["signUpMessage"]),
   },
 };
 </script>
@@ -149,14 +149,12 @@ export default {
   display: flex;
   justify-content: center;
 }
-.sign-in,
-.sign-up {
+.signUp {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.sign-in span,
-.sign-up span {
+.signUp span {
   font-size: 30px;
   font-family: "Times New Roman", Times, serif;
   line-height: 1.3;
@@ -173,10 +171,8 @@ export default {
 .el-input {
   width: 350px;
 }
-.el-form-item__error {
-  font-size: 15px !important;
-}
-.el-form-item--default {
-  --font-size: 18px;
+.el-alert {
+  --el-alert-title-font-size: 18px;
+  margin: 10px 0;
 }
 </style>
