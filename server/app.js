@@ -9,14 +9,14 @@ const path = require("path");
 const app = express();
 require("dotenv").config();
 
-// connet db
+// connet dataBase
 const mongoose = require("mongoose");
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
-let db = mongoose.connection;
-db.once("open", function() {
+let dataBase = mongoose.connection;
+dataBase.once("open", function() {
     console.log("連接成功");
 });
-db.on("err", function(err) {
+dataBase.on("err", function(err) {
     console.log(err);
 });
 // session
