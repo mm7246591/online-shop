@@ -53,7 +53,7 @@ UserSchema.methods.generateAuthToken = async function() {
     return token;
 };
 UserSchema.statics.findByCredentials = async(username, password) => {
-    // 根據 email 至資料庫找尋該用戶資料
+    // 根據 username 至資料庫找尋該用戶資料
     const user = await User.findOne({ username });
     // 沒找到該用戶時，丟出錯誤訊息
     if (!user) {

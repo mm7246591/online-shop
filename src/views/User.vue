@@ -1,9 +1,9 @@
 <template>
   <el-container
     ><el-header><Header /> </el-header>
-    <!-- <el-main
+    <el-main
       ><el-form label-width="100px" label-position="top">
-        <el-form-item label="userName">
+        <el-form-item label="username">
           <el-input />
         </el-form-item>
         <el-form-item label="password">
@@ -12,7 +12,7 @@
         <el-form-item label="phone">
           <el-input />
         </el-form-item> </el-form
-    ></el-main> -->
+    ></el-main>
   </el-container>
 </template>
 

@@ -11,7 +11,11 @@
       ><router-link :to="{ name: 'Kids' }">KIDS</router-link></el-menu-item
     >
 
-    <el-menu-item index="/Signin" class="icon">
+    <el-menu-item index="/Signin" class="icon" v-if="user">
+      <i class="fa-solid fa-user"></i>
+      <router-link :to="{ name: 'User' }">{{ userName }} </router-link>
+    </el-menu-item>
+    <el-menu-item index="/User" class="icon" v-else>
       <i class="fa-solid fa-user"></i>
       <router-link :to="{ name: 'Signin' }">登入 </router-link>
     </el-menu-item>
@@ -33,15 +37,10 @@ export default {
   components: {},
   setup() {
     const store = useStore();
-    const getStorage = computed(() => JSON.parse(localStorage.getItem("User")));
-    const getUser = computed(() => {
-      return store.getters.getUser;
-    });
+    const getUser = computed(() => store.getters.getUser);
     const userStatus = computed(() => getUser.value.status);
-    const userName = computed(() =>
-      getUser.value.userName ? getUser.value.userName : (getUser.value.userNam = "登入")
-    );
-    return { getUser, userName, userStatus, getStorage };
+    const userName = computed(() => getUser.value.userName);
+    return { getUser, userStatus, userName };
   },
   computed: {
     ...mapState(["user"]),

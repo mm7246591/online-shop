@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
-// const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
 const User = require("../models/users");
+const auth = require("../config/auth");
 require("dotenv").config();
-
 /**
  * @route post /user/signup
  * @desci signup the user
@@ -24,9 +22,7 @@ router.post("/signup", async(req, res) => {
             // 為該成功註冊之用戶產生 JWT
             const token = await newUser.generateAuthToken();
             // 回傳該用戶資訊及 JWT
-            res
-                .status(201)
-                .send({ success: true, message: "註冊成功", newUser, token });
+            res.status(201).send({ success: true, message: "註冊成功", token });
         } catch (err) {
             res.status(400).json({ message: "此帳號已經有人使用" });
         }
@@ -42,12 +38,11 @@ router.post("/signin", async(req, res) => {
     try {
         // 驗證使用者，並將驗證成功回傳的用戶完整資訊存在 user 上
         const user = await User.findByCredentials(username, password);
-        console.log(user);
         // 為該成功登入之用戶產生 JWT
         const token = await user.generateAuthToken();
         // 回傳該用戶資訊及 JWT
         res.status(200).json({
-            username: user.username,
+            userName: user.username,
             status: true,
             token: token,
         });
@@ -57,5 +52,8 @@ router.post("/signin", async(req, res) => {
         }
         res.status(404).json({ status: false, message: err });
     }
+});
+router.get("/", async(req, res) => {
+    console.log(req.headers());
 });
 module.exports = router;

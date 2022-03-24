@@ -4,7 +4,6 @@ const itemRouter = require("./routes/items");
 const userRouter = require("./routes/users");
 const cors = require("cors");
 const MongoStore = require("connect-mongo");
-const passport = require("passport");
 const path = require("path");
 const app = express();
 require("dotenv").config();
@@ -30,9 +29,6 @@ app.use(
 );
 // setup the static directory
 app.use(express.static(path.join(__dirname, "public")));
-// PassportMiddleware
-app.use(passport.initialize());
-require("./config/passport")(passport);
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

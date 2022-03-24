@@ -5,10 +5,9 @@ const store = createStore({
         return {
             items: [],
             isLoading: false,
-            user: {
-                userName: "",
-                status: false,
-            },
+            user: JSON.parse(localStorage.getItem("User")) ?
+                JSON.parse(localStorage.getItem("User")) :
+                "Guest",
             signUpMessage: null,
             signInMessage: null,
             Authorization: localStorage.getItem("Authorization") ?
@@ -55,12 +54,9 @@ const store = createStore({
             state.Authorization = payload;
             localStorage.setItem("Authorization", JSON.stringify(payload));
         },
-        STATUS(state, payload) {
-            state.user.status = payload;
-        },
-        USER_NAME(state, payload) {
-            state.user.userName = payload;
-            localStorage.setItem("User", JSON.stringify(state.user));
+        USER(state, payload) {
+            state.user = payload;
+            localStorage.setItem("User", JSON.stringify(payload));
         },
         SIGNUP_MESSAGE(state, payload) {
             state.signUpMessage = payload;

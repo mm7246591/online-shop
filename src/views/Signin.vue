@@ -67,9 +67,12 @@ export default {
         if (valid) {
           signinEvent(form)
             .then((res) => {
-              const { status, token, username } = res;
-              store.commit("STATUS", status);
-              store.commit("USER_NAME", username);
+              const { status, token, userName } = res;
+              const user = {
+                userName,
+                status,
+              };
+              store.commit("USER", user);
               store.commit("SET_TOKEN", token);
               router.push("/");
             })
