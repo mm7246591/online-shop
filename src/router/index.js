@@ -3,9 +3,11 @@ import Home from "../views/Home";
 import Men from "../views/Men";
 import Women from "../views/Women";
 import Kids from "../views/Kids";
+import User from "../views/User.vue";
 import Signin from "../views/Signin";
 import Signup from "../views/Signup";
 import Favorite from "../views/Favorite";
+// import store from "../store";
 
 const routes = [{
         path: "/",
@@ -28,6 +30,11 @@ const routes = [{
         component: Kids,
     },
     {
+        path: "/user",
+        name: "User",
+        component: User,
+    },
+    {
         path: "/user/signin",
         name: "Signin",
         component: Signin,
@@ -41,6 +48,9 @@ const routes = [{
         path: "/favorite",
         name: "Favorite",
         component: Favorite,
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/:pathMatch(.*)*",
@@ -52,11 +62,13 @@ const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
 });
-router.beforeEach(() => {
-    // let token = localStorage.getItem("Authorization");
-    // console.log(token);
-    // if (to.name !== "Signin" && !token) {
-    //     return { name: "Signin" };
-    // }
+router.beforeEach(async(to) => {
+    const token = localStorage.getItem("Authorization");
+    if (to.name === "Favorite") return;
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
+        if (token === null || token === "") {
+            return { name: "Signin" };
+        }
+    }
 });
 export default router;

@@ -111,12 +111,12 @@ export default {
             .then((res) => {
               const { success } = res;
               if (success) {
-                router.push("/user");
+                router.push("/user/signin");
               }
             })
             .catch((err) => {
               if (err) {
-                store.state.signUpMessage = err;
+                store.commit("SIGNUP_MESSAGE", err);
                 form.username = "";
                 form.password = "";
                 form.phone = "";

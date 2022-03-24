@@ -10,11 +10,10 @@
     <el-menu-item index="/Kids"
       ><router-link :to="{ name: 'Kids' }">KIDS</router-link></el-menu-item
     >
+
     <el-menu-item index="/Signin" class="icon">
       <i class="fa-solid fa-user"></i>
-      <router-link :to="{ name: 'Signin' }">
-        <span :checkUser="checkUser">{{ username }}</span>
-      </router-link>
+      <router-link :to="{ name: 'Signin' }">登入 </router-link>
     </el-menu-item>
     <el-menu-item index="/Favorite">
       <i class="fa-solid fa-cart-shopping"></i>
@@ -27,22 +26,26 @@
 
 <script>
 import { computed } from "@vue/runtime-core";
-import { mapState, useStore } from "vuex";
+import { useStore, mapGetters, mapState } from "vuex";
 
 export default {
   name: "Header",
   components: {},
   setup() {
     const store = useStore();
-    const checkUser = computed(() => {
-      return !store.state.username
-        ? (store.state.username = "登入")
-        : store.state.username;
+    const getStorage = computed(() => JSON.parse(localStorage.getItem("User")));
+    const getUser = computed(() => {
+      return store.getters.getUser;
     });
-    return { store, checkUser };
+    const userStatus = computed(() => getUser.value.status);
+    const userName = computed(() =>
+      getUser.value.userName ? getUser.value.userName : (getUser.value.userNam = "登入")
+    );
+    return { getUser, userName, userStatus, getStorage };
   },
   computed: {
-    ...mapState(["username"]),
+    ...mapState(["user"]),
+    ...mapGetters(["getUser"]),
   },
 };
 </script>
@@ -63,5 +66,10 @@ export default {
 }
 .el-menu--horizontal > .el-menu-item.icon {
   margin-left: auto;
+  width: auto;
+}
+.icon i,
+.icon a {
+  width: 100%;
 }
 </style>

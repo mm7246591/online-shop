@@ -1,5 +1,5 @@
 import axios from "axios";
-import router from "../router";
+// import router from "../router";
 //全域性配置
 // axios.defaults.timeout = 5000;
 // axios.defaults.baseURL = process.env.API_ROOT;
@@ -22,7 +22,8 @@ axios.interceptors.response.use(
     (error) => {
         if (error.response.status === 401) {
             localStorage.removeItem("Authorization");
-            router.push("/user/signin");
+            localStorage.removeItem("User");
+            // router.push("/user/signin");
         }
         return Promise.reject(error);
     }

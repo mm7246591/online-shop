@@ -4,17 +4,22 @@ const store = createStore({
     state() {
         return {
             items: [],
+            isLoading: false,
+            user: {
+                userName: "",
+                status: false,
+            },
             signUpMessage: null,
             signInMessage: null,
-            status: false,
-            isLoading: false,
-            username: null,
             Authorization: localStorage.getItem("Authorization") ?
                 localStorage.getItem("Authorization") :
                 null,
         };
     },
     getters: {
+        getUser(state) {
+            return state.user;
+        },
         menItems(state) {
             return state.items.filter((item) => item.category.includes("男"));
         },
@@ -27,6 +32,7 @@ const store = createStore({
     },
     actions: {
         async getData({ commit }) {
+            commit("MAINTAIN_USER", JSON.parse(localStorage.getItem("User")));
             commit("LOADING", true);
             try {
                 commit("GET_DATA", await itemsEvent());
@@ -42,12 +48,29 @@ const store = createStore({
         GET_DATA(state, payload) {
             state.items = payload.items;
         },
-        LOADING(state, status) {
-            state.isLoading = status;
+        LOADING(state, payload) {
+            state.isLoading = payload;
         },
-        GET_TOKEN(state, payload) {
+        SET_TOKEN(state, payload) {
             state.Authorization = payload;
-            localStorage.setItem("Authorization", payload);
+            localStorage.setItem("Authorization", JSON.stringify(payload));
+        },
+        STATUS(state, payload) {
+            state.user.status = payload;
+        },
+        USER_NAME(state, payload) {
+            state.user.userName = payload;
+            localStorage.setItem("User", JSON.stringify(state.user));
+        },
+        SIGNUP_MESSAGE(state, payload) {
+            state.signUpMessage = payload;
+        },
+        SIGNIN_MESSAGE(state, payload) {
+            state.signInMessage = payload;
+        },
+        MAINTAIN_USER(state, payload) {
+            //將登入者的資料重新賦予state，防止重整後，資料遺失
+            state.user = payload;
         },
     },
 });

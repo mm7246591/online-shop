@@ -68,13 +68,13 @@ export default {
           signinEvent(form)
             .then((res) => {
               const { status, token, username } = res;
-              store.state.status = status;
-              store.state.username = username;
-              store.commit("GET_TOKEN", token);
+              store.commit("STATUS", status);
+              store.commit("USER_NAME", username);
+              store.commit("SET_TOKEN", token);
               router.push("/");
             })
             .catch((err) => {
-              store.state.signInMessage = err;
+              store.commit("SIGNIN_MESSAGE", err);
               form.username = "";
               form.password = "";
             });

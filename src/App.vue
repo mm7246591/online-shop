@@ -4,11 +4,18 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { useStore, mapState } from "vuex";
 export default {
   name: "App",
-  components: {},
-  setup() {},
+  setup() {
+    const store = useStore();
+    window.addEventListener("load", function () {
+      if (localStorage.getItem("User")) {
+        store.commit("MAINTAIN_USER", JSON.parse(localStorage.getItem("User")));
+      }
+    });
+    return { store };
+  },
   computed: {
     ...mapState(["isLoading"]),
   },
