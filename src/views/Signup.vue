@@ -4,15 +4,6 @@
     <div class="container">
       <div class="signUp">
         <span>Sign up</span>
-        <div v-if="signUpMessage">
-          <el-alert
-            :title="signUpMessage"
-            type="error"
-            center
-            show-icon
-            :closable="false"
-          />
-        </div>
         <el-form ref="ruleForm" :model="form" :rules="formRules">
           <el-form-item label="帳號" prop="username">
             <el-input
@@ -49,6 +40,7 @@
 import { reactive, ref } from "vue";
 import { mapState, useStore } from "vuex";
 import { signupEvent } from "../api/api.js";
+import { ElMessage } from "element-plus";
 import Header from "../components/Header";
 import router from "../router/index.js";
 
@@ -109,13 +101,18 @@ export default {
         if (valid) {
           signupEvent(form)
             .then((res) => {
-              const { success } = res;
+              const { success, message } = res;
               if (success) {
                 router.push("/user/signin");
+                ElMessage({
+                  message: message,
+                  type: "success",
+                });
               }
             })
             .catch((err) => {
               if (err) {
+                ElMessage.error(err);
                 store.commit("SIGNUP_MESSAGE", err);
                 form.username = "";
                 form.password = "";

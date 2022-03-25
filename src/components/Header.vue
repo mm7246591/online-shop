@@ -10,14 +10,13 @@
     <el-menu-item index="/Kids"
       ><router-link :to="{ name: 'Kids' }">KIDS</router-link></el-menu-item
     >
-
-    <el-menu-item index="/Signin" class="icon" v-if="user">
+    <el-menu-item index="/Signin" class="icon" v-if="getStorage">
       <i class="fa-solid fa-user"></i>
       <router-link :to="{ name: 'User' }">{{ userName }} </router-link>
     </el-menu-item>
     <el-menu-item index="/User" class="icon" v-else>
       <i class="fa-solid fa-user"></i>
-      <router-link :to="{ name: 'Signin' }">登入 </router-link>
+      <router-link :to="{ name: 'Signin' }">登入</router-link>
     </el-menu-item>
     <el-menu-item index="/Favorite">
       <i class="fa-solid fa-cart-shopping"></i>
@@ -37,10 +36,11 @@ export default {
   components: {},
   setup() {
     const store = useStore();
+    const getStorage = computed(() => JSON.parse(localStorage.getItem("User")));
     const getUser = computed(() => store.getters.getUser);
     const userStatus = computed(() => getUser.value.status);
     const userName = computed(() => getUser.value.userName);
-    return { getUser, userStatus, userName };
+    return { getStorage, getUser, userStatus, userName };
   },
   computed: {
     ...mapState(["user"]),

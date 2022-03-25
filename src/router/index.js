@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home";
 import Men from "../views/Men";
+import MenItem from "../components/MenItem";
 import Women from "../views/Women";
 import Kids from "../views/Kids";
 import User from "../views/User.vue";
@@ -18,6 +19,11 @@ const routes = [{
         path: "/men",
         name: "Men",
         component: Men,
+    },
+    {
+        path: "/men/:id",
+        name: "MenItem",
+        component: MenItem,
     },
     {
         path: "/women",
