@@ -1,42 +1,44 @@
 <template>
   <el-container>
     <el-header><Header /></el-header>
-    <div class="container">
-      <div class="signIn">
-        <span>Sign in</span>
-        <div v-if="signInMessage">
-          <el-alert
-            :title="signInMessage"
-            type="error"
-            center
-            show-icon
-            :closable="false"
-          />
+    <el-main>
+      <div class="container">
+        <div class="signIn">
+          <span>Sign in</span>
+          <div v-if="signInMessage">
+            <el-alert
+              :title="signInMessage"
+              type="error"
+              center
+              show-icon
+              :closable="false"
+            />
+          </div>
+          <el-form ref="ruleForm" :model="form" :rules="formRules">
+            <el-form-item label="帳號" prop="username">
+              <el-input v-model.trim="form.username" type="text" clearable>
+                <template #prefix>
+                  <i class="fa-solid fa-user"></i>
+                </template>
+              </el-input>
+            </el-form-item>
+            <el-form-item label="密碼" prop="password">
+              <el-input v-model.trim="form.password" type="password" show-password>
+                <template #prefix>
+                  <i class="fa-solid fa-lock"></i>
+                </template>
+              </el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit(ruleForm)">登入</el-button>
+              <el-button type="primary">
+                <router-link :to="{ name: 'Signup' }">註冊</router-link>
+              </el-button>
+            </el-form-item>
+          </el-form>
         </div>
-        <el-form ref="ruleForm" :model="form" :rules="formRules">
-          <el-form-item label="帳號" prop="username">
-            <el-input v-model.trim="form.username" type="text" clearable>
-              <template #prefix>
-                <i class="fa-solid fa-user"></i>
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-form-item label="密碼" prop="password">
-            <el-input v-model.trim="form.password" type="password" show-password>
-              <template #prefix>
-                <i class="fa-solid fa-lock"></i>
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit(ruleForm)">登入</el-button>
-            <el-button type="primary">
-              <router-link :to="{ name: 'Signup' }">註冊</router-link>
-            </el-button>
-          </el-form-item>
-        </el-form>
       </div>
-    </div>
+    </el-main>
   </el-container>
 </template>
 

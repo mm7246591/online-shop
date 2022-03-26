@@ -16,6 +16,28 @@ let UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    favorite: [{
+        name: {
+            type: String,
+            required: true,
+        },
+        category: {
+            type: String,
+            required: true,
+        },
+        size: {
+            type: String,
+            required: true,
+        },
+        price: {
+            type: String,
+            required: true,
+        },
+        img: {
+            type: String,
+            required: true,
+        },
+    }, ],
     tokens: [{
         token: {
             type: String,

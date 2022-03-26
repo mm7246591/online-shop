@@ -1,9 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home";
+import HomeItem from "../views/HomeItem";
 import Men from "../views/Men";
-import MenItem from "../components/MenItem";
+import MenItem from "../views/MenItem";
 import Women from "../views/Women";
+import WomenItem from "../views/WomenItem";
 import Kids from "../views/Kids";
+import KidsItem from "../views/KidsItem";
 import User from "../views/User.vue";
 import Signin from "../views/Signin";
 import Signup from "../views/Signup";
@@ -14,6 +17,12 @@ const routes = [{
         path: "/",
         name: "Home",
         component: Home,
+    },
+    {
+        path: "/:id",
+        name: "HomeItem",
+        component: HomeItem,
+        props: true,
     },
     {
         path: "/men",
@@ -31,9 +40,19 @@ const routes = [{
         component: Women,
     },
     {
+        path: "/women/:id",
+        name: "WomenItem",
+        component: WomenItem,
+    },
+    {
         path: "/kids",
         name: "Kids",
         component: Kids,
+    },
+    {
+        path: "/kids/:id",
+        name: "KidsItem",
+        component: KidsItem,
     },
     {
         path: "/user",

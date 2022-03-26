@@ -124,16 +124,6 @@ export default {
   line-height: 1.3;
   font-family: "Times New Roman", Times, serif;
 }
-.text a {
-  text-decoration: none;
-}
-.text a :link,
-.text a:hover,
-.text a:visited,
-.text a:active,
-.text a:focus {
-  color: #646565;
-}
 .size,
 .price {
   font-family: "Times New Roman", Times, serif;

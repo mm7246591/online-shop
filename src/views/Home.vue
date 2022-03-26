@@ -7,7 +7,18 @@
         ><div class="container">
           <div class="item" v-for="item of displayData" :key="item.id">
             <div class="img">
-              <router-link to="/">
+              <router-link
+                :to="{
+                  path: `/${item.id}`,
+                  query: {
+                    id: item.id,
+                    img: item.img,
+                    name: item.name,
+                    size: item.size,
+                    price: item.price,
+                  },
+                }"
+              >
                 <img :src="item.img" alt="" />
               </router-link>
             </div>
@@ -121,16 +132,6 @@ export default {
   font-size: 18px;
   line-height: 1.3;
   font-family: "Times New Roman", Times, serif;
-}
-.text a {
-  text-decoration: none;
-}
-.text a :link,
-.text a:hover,
-.text a:visited,
-.text a:active,
-.text a:focus {
-  color: #646565;
 }
 .size,
 .price {

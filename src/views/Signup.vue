@@ -1,38 +1,45 @@
 <template>
   <el-container>
     <el-header><Header /></el-header>
-    <div class="container">
-      <div class="signUp">
-        <span>Sign up</span>
-        <el-form ref="ruleForm" :model="form" :rules="formRules">
-          <el-form-item label="帳號" prop="username">
-            <el-input
-              v-model.trim="form.username"
-              type="text"
-              placeholder="username"
-              clearable
-            >
-            </el-input>
-          </el-form-item>
-          <el-form-item label="密碼" prop="password">
-            <el-input
-              v-model.trim="form.password"
-              type="password"
-              placeholder="請輸入介於8-20位數之間密碼"
-              show-password
-            >
-            </el-input>
-          </el-form-item>
-          <el-form-item label="手機" prop="phone">
-            <el-input v-model.trim="form.phone" type="tel" clearable placeholder="phone">
-            </el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit(ruleForm)">送出</el-button>
-          </el-form-item>
-        </el-form>
+    <el-main>
+      <div class="container">
+        <div class="signUp">
+          <span>Sign up</span>
+          <el-form ref="ruleForm" :model="form" :rules="formRules">
+            <el-form-item label="帳號" prop="username">
+              <el-input
+                v-model.trim="form.username"
+                type="text"
+                placeholder="username"
+                clearable
+              >
+              </el-input>
+            </el-form-item>
+            <el-form-item label="密碼" prop="password">
+              <el-input
+                v-model.trim="form.password"
+                type="password"
+                placeholder="請輸入介於8-20位數之間密碼"
+                show-password
+              >
+              </el-input>
+            </el-form-item>
+            <el-form-item label="手機" prop="phone">
+              <el-input
+                v-model.trim="form.phone"
+                type="tel"
+                clearable
+                placeholder="phone"
+              >
+              </el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit(ruleForm)">送出</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
-    </div>
+    </el-main>
   </el-container>
 </template>
 
