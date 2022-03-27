@@ -109,6 +109,7 @@ export default {
   height: 400px;
   object-fit: cover;
   transition: 0.9s ease-in-out;
+  font-family: "Times New Roman", Times, serif;
 }
 .item .img {
   overflow: hidden;
@@ -124,11 +125,12 @@ export default {
   color: #646565;
   font-size: 18px;
   line-height: 1.3;
-  font-family: "Times New Roman", Times, serif;
+}
+.size {
+  letter-spacing: 0.5rem;
 }
 .size,
 .price {
-  font-family: "Times New Roman", Times, serif;
   font-size: 20px;
   font-style: italic;
   margin: 5px 0;

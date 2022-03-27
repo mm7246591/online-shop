@@ -11,11 +11,7 @@
                 :to="{
                   path: `/${item.id}`,
                   query: {
-                    id: item.id,
-                    img: item.img,
                     name: item.name,
-                    size: item.size,
-                    price: item.price,
                   },
                 }"
               >
@@ -26,7 +22,7 @@
               <span>{{ item.name }}</span>
             </div>
             <div class="size">
-              <span>{{ item.size }}</span>
+              <span>S M L XL</span>
             </div>
             <div class="price">{{ item.price }}</div>
           </div>
@@ -122,20 +118,30 @@ export default {
 .item {
   width: 250px;
   height: 400px;
+  object-fit: cover;
+  transition: 0.9s ease-in-out;
+  font-family: "Times New Roman", Times, serif;
+}
+.item .img {
+  overflow: hidden;
 }
 .img img {
   width: 240px;
   height: 300px;
 }
+.item:hover .img img {
+  transform: scale(1.1);
+}
 .item .text {
   color: #646565;
   font-size: 18px;
   line-height: 1.3;
-  font-family: "Times New Roman", Times, serif;
+}
+.size {
+  letter-spacing: 0.5rem;
 }
 .size,
 .price {
-  font-family: "Times New Roman", Times, serif;
   font-size: 20px;
   font-style: italic;
   margin: 5px 0;

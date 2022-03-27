@@ -4,18 +4,30 @@
     <el-container>
       <el-main>
         <div class="container">
-          {{ itemId }}
-          {{ name }}
-          <div class="item">
-            <div class="img"></div>
-            <div class="text">
-              <span>{{ name }}</span>
-            </div>
-            <div class="size">
-              <span>{{ size }}</span>
-            </div>
-            <div class="price">{{ price }}</div>
+          <div class="img" v-for="item of item" :key="item.id">
+            <img :src="item.img" alt="" />
           </div>
+          <el-form :model="form" class="form" v-for="item of item" :key="item.id">
+            <div class="item">
+              <div class="text">{{ item.name }}</div>
+              <div class="price">{{ item.price }}</div>
+            </div>
+            <el-select v-model="form.size" class="m-2" placeholder="Size">
+              <el-option label="S" value="S" />
+              <el-option label="M" value="M" />
+              <el-option label="L" value="L" />
+              <el-option label="XL" value="XL" />
+            </el-select>
+            <el-select v-model="form.sum" class="m-2" placeholder="數量">
+              <el-option :label="item.S" :value="item.S" />
+              <el-option :label="item.M" :value="item.M" />
+              <el-option :label="item.L" :value="item.L" />
+              <el-option :label="item.XL" :value="item.XL" />
+            </el-select>
+            <el-form-item>
+              <el-button @click="submitForm()">加入購物車</el-button>
+            </el-form-item>
+          </el-form>
         </div>
       </el-main>
     </el-container>
@@ -23,26 +35,46 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { ElMessage } from "element-plus";
+import { reactive, computed, onMounted } from "vue";
 import { useStore, mapState } from "vuex";
 import Header from "../components/Header";
 
 export default {
   name: "HomeItem",
-  props: ["id", "img", "name", "size", "price"],
+  props: ["id"],
   components: {
     Header,
   },
-  setup() {
+  setup(props) {
     const store = useStore();
-    const itemId = computed(() => {
-      console.log(store.state.items);
-      return store.state.items.filter((item) => {
-        console.log(item);
-        return item;
-      });
+    const form = reactive({
+      id: props.id,
+      size: "",
+      sum: "",
     });
-    return { itemId };
+    const getData = () => {
+      store.dispatch("getData");
+    };
+    onMounted(() => {
+      getData();
+    });
+    const item = computed(() => store.state.items.filter((item) => item.id === props.id));
+    const submitForm = () => {
+      if (!form.size || !form.sum) {
+        ElMessage({
+          message: "請選擇尺寸及數量",
+          type: "warning",
+        });
+        return false;
+      }
+      ElMessage({
+        message: "加入成功",
+        type: "success",
+      });
+      console.log(form);
+    };
+    return { form, item, submitForm };
   },
   computed: {
     ...mapState(["items"]),
@@ -58,37 +90,28 @@ export default {
   margin-top: 10px;
 }
 .container {
-  width: 100%;
-  display: grid;
-  justify-items: center;
-  gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-template-rows: 400px;
+  width: 1200px;
+  display: flex;
+  justify-content: center;
+  margin: auto;
 }
-.item {
-  width: 250px;
-  height: 400px;
+.img {
+  width: 100%;
 }
 .img img {
-  width: 240px;
-  height: 300px;
+  width: 500px;
 }
-.item .text {
+.form {
+  width: 100%;
+}
+.item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
   color: #646565;
   font-size: 18px;
   line-height: 1.3;
   font-family: "Times New Roman", Times, serif;
-}
-.size,
-.price {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 20px;
-  font-style: italic;
-  margin: 5px 0;
-}
-.el-pagination {
-  text-align: center;
-  --el-pagination-font-size: 20px;
-  --el-pagination-button-height: 20px;
 }
 </style>
