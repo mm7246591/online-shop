@@ -41,6 +41,7 @@ export default {
         });
         localStorage.removeItem("Authorization");
         localStorage.removeItem("User");
+        localStorage.removeItem("preRoute");
         router.push("/");
       });
     };

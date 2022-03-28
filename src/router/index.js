@@ -87,13 +87,16 @@ const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
 });
-router.beforeEach(async(to) => {
+router.beforeEach((to) => {
     const token = localStorage.getItem("Authorization");
-    if (to.name === "Favorite") return;
-    if (to.matched.some((record) => record.meta.requiresAuth)) {
-        if (token === null || token === "") {
-            return { name: "Signin" };
-        }
+    if ((to.meta.requiresAuth && token === null) || token === "") {
+        // 檢查是否登入，如果沒有重新定向到登入頁面
+        // 儲存當前的路由，等使用者登入後會自動導回這路由
+        localStorage.setItem(
+            "preRoute",
+            JSON.stringify(router.currentRoute._value.name)
+        );
+        return { name: "Signin" };
     }
 });
 export default router;
