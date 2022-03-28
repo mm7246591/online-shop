@@ -19,7 +19,7 @@ const routes = [{
         component: Home,
     },
     {
-        path: "/:id",
+        path: "/:name",
         name: "HomeItem",
         component: HomeItem,
         props: true,
@@ -94,7 +94,7 @@ router.beforeEach((to) => {
         // 儲存當前的路由，等使用者登入後會自動導回這路由
         localStorage.setItem(
             "preRoute",
-            JSON.stringify(router.currentRoute._value.name)
+            JSON.stringify(router.currentRoute._value.fullPath)
         );
         return { name: "Signin" };
     }

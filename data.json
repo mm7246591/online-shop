@@ -7,78 +7,105 @@
         "L": "2",
         "XL": "2",
         "price": "NT$1,300",
-        "img": "https://picsum.photos/id/237/250/300"
+        "img": "https://fakeimg.pl/250x300/"
     },
     {
         "id": "2",
         "name": "厚磅寬版刺繡TEE(男女適穿)",
         "category": "男、全部、限時折扣、長袖",
-        "size": "M",
+        "S": "2",
+        "M": "2",
+        "L": "2",
+        "XL": "2",
         "price": "NT$1,300",
-        "img": "https://picsum.photos/id/237/250/300"
+        "img": "https://fakeimg.pl/250x300/"
     },
     {
         "id": "3",
         "name": "厚磅寬版刺繡TEE(男女適穿)",
         "category": "男、全部、本週新品、短褲",
-        "size": "M",
+        "S": "2",
+        "M": "2",
+        "L": "2",
+        "XL": "2",
         "price": "NT$1,300",
-        "img": "https://picsum.photos/id/237/250/300"
+        "img": "https://fakeimg.pl/250x300/"
     },
     {
         "id": "4",
         "name": "厚磅寬版刺繡TEE(男女適穿)",
         "category": "女、全部、熱銷商品、短袖",
-        "size": "M",
+        "S": "2",
+        "M": "2",
+        "L": "2",
+        "XL": "2",
         "price": "NT$1,300",
-        "img": "https://picsum.photos/id/237/250/300"
+        "img": "https://fakeimg.pl/250x300/"
     },
     {
         "id": "5",
         "name": "厚磅寬版刺繡TEE(男女適穿)",
         "category": "女、全部、本週新品、長袖",
-        "size": "M",
+        "S": "2",
+        "M": "2",
+        "L": "2",
+        "XL": "2",
         "price": "NT$1,300",
-        "img": "https://picsum.photos/id/237/250/300"
+        "img": "https://fakeimg.pl/250x300/"
     },
     {
         "id": "6",
         "name": "厚磅寬版刺繡TEE(男女適穿)",
         "category": "女、全部、限時折扣、短褲",
-        "size": "M",
+        "S": "2",
+        "M": "2",
+        "L": "2",
+        "XL": "2",
         "price": "NT$1,300",
-        "img": "https://picsum.photos/id/237/250/300"
+        "img": "https://fakeimg.pl/250x300/"
     },
     {
         "id": "7",
         "name": "厚磅寬版刺繡TEE(男女適穿)",
         "category": "兒童、全部、熱銷商品、短袖",
-        "size": "M",
+        "S": "2",
+        "M": "2",
+        "L": "2",
+        "XL": "2",
         "price": "NT$1,300",
-        "img": "https://picsum.photos/id/237/250/300"
+        "img": "https://fakeimg.pl/250x300/"
     },
     {
         "id": "8",
         "name": "厚磅寬版刺繡TEE(男女適穿)",
         "category": "兒童、全部、限時折扣、長袖",
-        "size": "M",
+        "S": "2",
+        "M": "2",
+        "L": "2",
+        "XL": "2",
         "price": "NT$1,300",
-        "img": "https://picsum.photos/id/237/250/300"
+        "img": "https://fakeimg.pl/250x300/"
     },
     {
         "id": "9",
         "name": "厚磅寬版刺繡TEE(男女適穿)",
         "category": "兒童、全部、限時折扣、長褲",
-        "size": "M",
+        "S": "2",
+        "M": "2",
+        "L": "2",
+        "XL": "2",
         "price": "NT$1,300",
-        "img": "https://picsum.photos/id/237/250/300"
+        "img": "https://fakeimg.pl/250x300/"
     },
     {
         "id": "10",
         "name": "厚磅寬版刺繡TEE(男女適穿)",
         "category": "兒童、全部、限時折扣、短褲",
-        "size": "M",
+        "S": "2",
+        "M": "2",
+        "L": "2",
+        "XL": "2",
         "price": "NT$1,300",
-        "img": "https://picsum.photos/id/237/250/300"
+        "img": "https://fakeimg.pl/250x300/"
     }
 ]

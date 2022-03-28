@@ -77,7 +77,7 @@ export default {
               store.commit("USER", user);
               store.commit("SET_TOKEN", token);
               const curr = JSON.parse(localStorage.getItem("preRoute"));
-              curr ? router.push({ name: curr }) : router.push({ name: "Home" });
+              curr ? router.push({ path: curr }) : router.push({ path: "/" });
             })
             .catch((err) => {
               store.commit("SIGNIN_MESSAGE", err);

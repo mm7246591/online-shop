@@ -8,3 +8,10 @@ export function signupEvent(params) {
 export function signinEvent(params) {
     return post("/api/user/signin", params);
 }
+export function userEvent() {
+    return get("/api/user");
+}
+export function homeItemEvent(params) {
+    console.log(params);
+    return post("/api/:name", params);
+}

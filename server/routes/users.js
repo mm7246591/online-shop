@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/users");
 const auth = require("../config/auth");
-require("dotenv").config();
 /**
  * @route post /user/signup
  * @desci signup the user
@@ -53,7 +52,5 @@ router.post("/signin", async(req, res) => {
         res.status(404).json({ status: false, message: err });
     }
 });
-router.get("/", async(req, res) => {
-    console.log(req.headers());
-});
+router.get("/", auth, async(req, res) => {});
 module.exports = router;

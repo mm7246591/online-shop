@@ -9,7 +9,7 @@
             <div class="img">
               <router-link
                 :to="{
-                  path: `/${item.id}`,
+                  path: `/${item.name}`,
                   query: {
                     name: item.name,
                   },
@@ -126,7 +126,7 @@ export default {
   overflow: hidden;
 }
 .img img {
-  width: 240px;
+  width: 250px;
   height: 300px;
 }
 .item:hover .img img {

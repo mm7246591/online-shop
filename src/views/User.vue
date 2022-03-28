@@ -4,13 +4,13 @@
     <el-main>
       <el-form label-position="top">
         <el-form-item label="username">
-          <el-input />
+          <el-input v-model="user.username" type="text" readonly />
         </el-form-item>
         <el-form-item label="password">
-          <el-input />
+          <el-input v-model="user.password" type="password" />
         </el-form-item>
         <el-form-item label="phone">
-          <el-input />
+          <el-input v-model="user.phone" type="tel" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary">修改</el-button>
@@ -25,10 +25,29 @@
 import { ElMessageBox, ElMessage } from "element-plus";
 import router from "../router/index";
 import Header from "../components/Header";
+import { reactive } from "@vue/reactivity";
+import axios from "axios";
 export default {
   name: "User",
   components: { Header },
   setup() {
+    const user = reactive({
+      username: "",
+      password: "",
+      phone: "",
+    });
+    axios
+      .get("/api/user")
+      .then((res) => {
+        const { username, password, phone } = res.user;
+        user.username = username;
+        user.password = password;
+        user.phone = phone;
+        console.log(username, password, phone);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     const logOut = () => {
       ElMessageBox.confirm("確定要登出嗎?", "警告", {
         confirmButtonText: "確定",
@@ -45,7 +64,7 @@ export default {
         router.push("/");
       });
     };
-    return { logOut };
+    return { user, logOut };
   },
 };
 </script>

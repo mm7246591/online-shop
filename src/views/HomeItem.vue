@@ -38,18 +38,21 @@
 import { ElMessage } from "element-plus";
 import { reactive, computed, onMounted } from "vue";
 import { useStore, mapState } from "vuex";
+import { homeItemEvent } from "../api/api";
 import Header from "../components/Header";
+import router from "../router";
 
 export default {
   name: "HomeItem",
-  props: ["id"],
+  props: ["name"],
   components: {
     Header,
   },
   setup(props) {
     const store = useStore();
+    const token = localStorage.getItem("Authorization");
     const form = reactive({
-      id: props.id,
+      name: props.name,
       size: "",
       sum: "",
     });
@@ -59,7 +62,9 @@ export default {
     onMounted(() => {
       getData();
     });
-    const item = computed(() => store.state.items.filter((item) => item.id === props.id));
+    const item = computed(() =>
+      store.state.items.filter((item) => item.name === props.name)
+    );
     const submitForm = () => {
       if (!form.size || !form.sum) {
         ElMessage({
@@ -68,11 +73,19 @@ export default {
         });
         return false;
       }
-      ElMessage({
-        message: "加入成功",
-        type: "success",
-      });
-      console.log(form);
+      if (token === null) {
+        localStorage.setItem(
+          "preRoute",
+          JSON.stringify(router.currentRoute._value.fullPath)
+        );
+        router.push("/user/signin");
+      } else {
+        ElMessage({
+          message: "加入成功",
+          type: "success",
+        });
+        homeItemEvent(form);
+      }
     };
     return { form, item, submitForm };
   },

@@ -7,7 +7,14 @@
         ><div class="container">
           <div class="item" v-for="item of displayData" :key="item.id">
             <div class="img">
-              <router-link :to="`/men/${item.name}`">
+              <router-link
+                :to="{
+                  path: `/men/${item.name}`,
+                  query: {
+                    name: item.name,
+                  },
+                }"
+              >
                 <img :src="item.img" alt="" />
               </router-link>
             </div>
@@ -115,7 +122,7 @@ export default {
   overflow: hidden;
 }
 .img img {
-  width: 240px;
+  width: 250px;
   height: 300px;
 }
 .item:hover .img img {
