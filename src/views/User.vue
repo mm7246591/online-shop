@@ -2,18 +2,21 @@
   <el-container
     ><el-header><Header /> </el-header>
     <el-main>
-      <el-form label-position="top">
-        <el-form-item label="username">
-          <el-input v-model="user.username" type="text" readonly />
+      <el-form :model="form" label-position="top">
+        <el-form-item label="使用者帳號" prop="username">
+          <span style="width: 350px">{{ form.username }}</span>
         </el-form-item>
-        <el-form-item label="password">
-          <el-input v-model="user.password" type="password" />
+        <el-form-item label="現在的密碼" prop="oldPassword">
+          <el-input v-model="form.oldPassword" type="password" />
         </el-form-item>
-        <el-form-item label="phone">
-          <el-input v-model="user.phone" type="tel" />
+        <el-form-item label="新的密碼" prop="newPassword">
+          <el-input v-model="form.newPassword" type="password" />
+        </el-form-item>
+        <el-form-item label="電話" prop="phone">
+          <el-input v-model="form.phone" type="tel" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">修改</el-button>
+          <el-button type="primary" @click="update">修改</el-button>
           <el-button type="danger" @click="logOut">登出</el-button>
         </el-form-item>
       </el-form>
@@ -24,30 +27,59 @@
 <script>
 import { ElMessageBox, ElMessage } from "element-plus";
 import router from "../router/index";
+import { ref, reactive } from "@vue/reactivity";
+import { userEvent, updateUserEvent } from "../api/api";
 import Header from "../components/Header";
-import { reactive } from "@vue/reactivity";
-import axios from "axios";
 export default {
   name: "User",
   components: { Header },
   setup() {
-    const user = reactive({
+    const form = reactive({
       username: "",
-      password: "",
+      oldPassword: "",
+      newPassword: "",
       phone: "",
     });
-    axios
-      .get("/api/user")
+    const passwordReg = ref(/^.{1,5}$/);
+    const phoneReg = ref(/^09[0-9]{8}$/);
+    userEvent()
       .then((res) => {
-        const { username, password, phone } = res.user;
-        user.username = username;
-        user.password = password;
-        user.phone = phone;
-        console.log(username, password, phone);
+        const { username, phone } = res.user;
+        form.username = username;
+        form.phone = phone;
       })
       .catch((err) => {
         console.log(err);
       });
+    const update = () => {
+      if (!form.oldPassword || !form.newPassword) {
+        ElMessage.error("密碼欄不能為空");
+      } else if (passwordReg.value.test(form.oldPassword) === false) {
+        ElMessage.error("密碼格式不正確");
+      } else if (passwordReg.value.test(form.newPassword) === false) {
+        ElMessage.error("密碼格式不正確");
+      } else if (!form.phone) {
+        ElMessage.error("電話欄不能為空");
+      } else if (phoneReg.value.test(form.phone) === false) {
+        ElMessage.error("電話格式不正確");
+      } else {
+        updateUserEvent(form)
+          .then((res) => {
+            const { message } = res;
+            ElMessage({
+              type: "success",
+              message: message,
+            });
+            form.oldPassword = "";
+            form.newPassword = "";
+          })
+          .catch((err) => {
+            ElMessage.error(err);
+            form.oldPassword = "";
+            form.newPassword = "";
+          });
+      }
+    };
     const logOut = () => {
       ElMessageBox.confirm("確定要登出嗎?", "警告", {
         confirmButtonText: "確定",
@@ -64,7 +96,13 @@ export default {
         router.push("/");
       });
     };
-    return { user, logOut };
+    return {
+      form,
+      passwordReg,
+      phoneReg,
+      update,
+      logOut,
+    };
   },
 };
 </script>

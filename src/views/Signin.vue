@@ -5,15 +5,6 @@
       <div class="container">
         <div class="signIn">
           <span>Sign in</span>
-          <div v-if="signInMessage">
-            <el-alert
-              :title="signInMessage"
-              type="error"
-              center
-              show-icon
-              :closable="false"
-            />
-          </div>
           <el-form ref="ruleForm" :model="form" :rules="formRules">
             <el-form-item label="帳號" prop="username">
               <el-input v-model.trim="form.username" type="text" clearable>
@@ -43,9 +34,10 @@
 </template>
 
 <script>
+import { ElMessage } from "element-plus";
 import { reactive, ref } from "vue";
 import { signinEvent } from "../api/api.js";
-import { useStore, mapState } from "vuex";
+import { useStore } from "vuex";
 import router from "../router/index.js";
 import Header from "../components/Header";
 
@@ -69,9 +61,9 @@ export default {
         if (valid) {
           signinEvent(form)
             .then((res) => {
-              const { status, token, userName } = res;
+              const { status, token, username } = res;
               const user = {
-                userName,
+                username,
                 status,
               };
               store.commit("USER", user);
@@ -80,7 +72,7 @@ export default {
               curr ? router.push({ path: curr }) : router.push({ path: "/" });
             })
             .catch((err) => {
-              store.commit("SIGNIN_MESSAGE", err);
+              ElMessage.error(err);
               form.username = "";
               form.password = "";
             });
@@ -90,9 +82,6 @@ export default {
       });
     };
     return { form, formRules, ruleForm, onSubmit };
-  },
-  computed: {
-    ...mapState(["signInMessage"]),
   },
 };
 </script>

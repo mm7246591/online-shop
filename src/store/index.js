@@ -8,8 +8,6 @@ const store = createStore({
             user: JSON.parse(localStorage.getItem("User")) ?
                 JSON.parse(localStorage.getItem("User")) :
                 "Guest",
-            signUpMessage: null,
-            signInMessage: null,
             Authorization: localStorage.getItem("Authorization") ?
                 localStorage.getItem("Authorization") :
                 null,
@@ -57,12 +55,6 @@ const store = createStore({
         USER(state, payload) {
             state.user = payload;
             localStorage.setItem("User", JSON.stringify(payload));
-        },
-        SIGNUP_MESSAGE(state, payload) {
-            state.signUpMessage = payload;
-        },
-        SIGNIN_MESSAGE(state, payload) {
-            state.signInMessage = payload;
         },
         MAINTAIN_USER(state, payload) {
             //將登入者的資料重新賦予state，防止重整後，資料遺失

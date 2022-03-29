@@ -39,7 +39,7 @@ export default {
     const getStorage = computed(() => JSON.parse(localStorage.getItem("User")));
     const getUser = computed(() => store.getters.getUser);
     const userStatus = computed(() => getUser.value.status);
-    const userName = computed(() => getUser.value.userName);
+    const userName = computed(() => getUser.value.username);
     return { getStorage, getUser, userStatus, userName };
   },
   computed: {

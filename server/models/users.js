@@ -61,6 +61,15 @@ UserSchema.pre("save", async function(next) {
     }
     next();
 });
+UserSchema.pre("findOneAndUpdate", async function(next) {
+    // this 指向目前正被更改的使用者 document
+    const update = this.getUpdate();
+    if (update) {
+        // 透過 bcrypt 處理密碼，獲得 hashed password
+        update.$set.password = await bcrypt.hash(update.$set.password, 10);
+    }
+    next();
+});
 UserSchema.methods.generateAuthToken = async function() {
     // this 指向當前的使用者實例
     const user = this;

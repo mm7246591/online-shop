@@ -45,7 +45,6 @@
 
 <script>
 import { reactive, ref } from "vue";
-import { mapState, useStore } from "vuex";
 import { signupEvent } from "../api/api.js";
 import { ElMessage } from "element-plus";
 import Header from "../components/Header";
@@ -60,7 +59,6 @@ export default {
       password: "",
       phone: "",
     });
-    const store = useStore();
     const ruleForm = ref(null);
     const usernameReg = ref(/^[a-zA-Z0-9]+$/);
     const passwordReg = ref(/^.{1,5}$/);
@@ -120,7 +118,6 @@ export default {
             .catch((err) => {
               if (err) {
                 ElMessage.error(err);
-                store.commit("SIGNUP_MESSAGE", err);
                 form.username = "";
                 form.password = "";
                 form.phone = "";
@@ -135,9 +132,6 @@ export default {
       formRules,
       onSubmit,
     };
-  },
-  computed: {
-    ...mapState(["signUpMessage"]),
   },
 };
 </script>
