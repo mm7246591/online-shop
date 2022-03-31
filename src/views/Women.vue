@@ -22,7 +22,7 @@
               <span>{{ item.name }}</span>
             </div>
             <div class="size">
-              <span>{{ item.size }}</span>
+              <span>S M L XL</span>
             </div>
             <div class="price">{{ item.price }}</div>
           </div>

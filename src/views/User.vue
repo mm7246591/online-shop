@@ -2,7 +2,7 @@
   <el-container
     ><el-header><Header /> </el-header>
     <el-main>
-      <el-form :model="form" label-position="top">
+      <el-form v-model="form" label-position="top">
         <el-form-item label="使用者帳號" prop="username">
           <span style="width: 350px">{{ form.username }}</span>
         </el-form-item>

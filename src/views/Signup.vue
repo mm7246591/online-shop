@@ -5,7 +5,7 @@
       <div class="container">
         <div class="signUp">
           <span>Sign up</span>
-          <el-form ref="ruleForm" :model="form" :rules="formRules">
+          <el-form ref="ruleForm" v-model="form" :rules="formRules">
             <el-form-item label="帳號" prop="username">
               <el-input
                 v-model.trim="form.username"

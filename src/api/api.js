@@ -13,14 +13,17 @@ export function signinEvent(params) {
 }
 // get user
 export function userEvent() {
-    return get("/api/user");
+    return get("/api/user/update");
 }
 // update user
 export function updateUserEvent(params) {
-    return post("http://localhost:3000/user", params);
+    return post("/api/user/update", params);
 }
 // add shoppingCar
 export function homeItemEvent(params) {
-    console.log(params);
     return post("/api/:name", params);
+}
+// get shoppingCar
+export function getShoppingCarEvent() {
+    return get("/api/favorite");
 }

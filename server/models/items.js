@@ -9,7 +9,19 @@ let ItemSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    size: {
+    S: {
+        type: String,
+        required: true,
+    },
+    M: {
+        type: String,
+        required: true,
+    },
+    L: {
+        type: String,
+        required: true,
+    },
+    XL: {
         type: String,
         required: true,
     },

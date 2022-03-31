@@ -4,26 +4,26 @@
     <el-container>
       <el-main>
         <div class="container">
-          <div class="img" v-for="item of item" :key="item.id">
+          <div class="img" v-for="item of items" :key="item.id">
             <img :src="item.img" alt="" />
           </div>
-          <el-form :model="form" class="form" v-for="item of item" :key="item.id">
+          <el-form v-model="form" class="form" v-for="item of items" :key="item.id">
             <div class="item">
               <div class="text">{{ item.name }}</div>
               <div class="price">{{ item.price }}</div>
             </div>
             <el-select v-model="form.size" class="m-2" placeholder="Size">
-              <el-option label="S" value="S" />
-              <el-option label="M" value="M" />
-              <el-option label="L" value="L" />
-              <el-option label="XL" value="XL" />
+              <el-option label="S" value="S" :disabled="item.S === '0' ? true : false" />
+              <el-option label="M" value="M" :disabled="item.M === '0' ? true : false" />
+              <el-option label="L" value="L" :disabled="item.L === '0' ? true : false" />
+              <el-option
+                label="XL"
+                value="XL"
+                :disabled="item.XL === '0' ? true : false"
+              />
             </el-select>
-            <el-select v-model="form.sum" class="m-2" placeholder="數量">
-              <el-option :label="item.S" :value="item.S" />
-              <el-option :label="item.M" :value="item.M" />
-              <el-option :label="item.L" :value="item.L" />
-              <el-option :label="item.XL" :value="item.XL" />
-            </el-select>
+            <el-input-number v-model="form.num" :min="1" :max="Number(checkNum)" />
+            <span> 還剩{{ checkNum }}件</span>
             <el-form-item>
               <el-button @click="submitForm()">加入購物車</el-button>
             </el-form-item>
@@ -50,11 +50,14 @@ export default {
   },
   setup(props) {
     const store = useStore();
-    const token = localStorage.getItem("Authorization");
+    const token = JSON.parse(localStorage.getItem("Authorization"));
+    const user = JSON.parse(localStorage.getItem("User"));
     const form = reactive({
+      username: user.username,
+      token: token,
       name: props.name,
       size: "",
-      sum: "",
+      num: null,
     });
     const getData = () => {
       store.dispatch("getData");
@@ -62,11 +65,24 @@ export default {
     onMounted(() => {
       getData();
     });
-    const item = computed(() =>
+    const items = computed(() =>
       store.state.items.filter((item) => item.name === props.name)
     );
+
+    const checkNum = computed(() => {
+      if (form.size === "S") {
+        return items.value[0].S;
+      } else if (form.size === "M") {
+        return items.value[0].M;
+      } else if (form.size === "L") {
+        return items.value[0].L;
+      } else if (form.size === "XL") {
+        return items.value[0].XL;
+      }
+      return 9999;
+    });
     const submitForm = () => {
-      if (!form.size || !form.sum) {
+      if (!form.size || !form.num) {
         ElMessage({
           message: "請選擇尺寸及數量",
           type: "warning",
@@ -80,14 +96,20 @@ export default {
         );
         router.push("/user/signin");
       } else {
-        ElMessage({
-          message: "加入成功",
-          type: "success",
-        });
-        homeItemEvent(form);
+        homeItemEvent(form)
+          .then((res) => {
+            const { message } = res;
+            ElMessage({
+              message: message,
+              type: "success",
+            });
+          })
+          .catch((err) => {
+            ElMessage.error(err);
+          });
       }
     };
-    return { form, item, submitForm };
+    return { form, items, checkNum, submitForm };
   },
   computed: {
     ...mapState(["items"]),

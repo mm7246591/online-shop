@@ -3,7 +3,6 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/users");
 const auth = require("../config/auth");
-const { async } = require("q");
 /**
  * @route post /user/signup
  * @desci signup the user
@@ -54,15 +53,17 @@ router.post("/signin", async(req, res) => {
     }
 });
 /**
- * @route get user
+ * @route get /user/updata
+ * @desci get user
  * @access Public
  */
-router.get("/", auth, async(req, res) => {});
+router.get("/update", auth);
 /**
- * @route update user
+ * @route post /user/updata
+ * @desci update user
  * @access Public
  */
-router.post("/", (req, res) => {
+router.post("/update", (req, res) => {
     const { username, oldPassword, newPassword, phone } = req.body;
     User.findOneAndUpdate({ username: username }, { $set: { password: newPassword, phone: phone } },
         async function(err, user) {
