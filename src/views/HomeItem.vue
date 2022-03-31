@@ -94,11 +94,13 @@ export default {
           "preRoute",
           JSON.stringify(router.currentRoute._value.fullPath)
         );
-        router.push("/user/signin");
+        router.push({ name: "Signin" });
       } else {
         homeItemEvent(form)
           .then((res) => {
-            const { message } = res;
+            const { message, shoppingCar } = res;
+            localStorage.setItem("shoppingNum", JSON.stringify(shoppingCar.length));
+            store.commit("GET_SHOPPINGNUM", shoppingCar.length);
             ElMessage({
               message: message,
               type: "success",

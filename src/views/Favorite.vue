@@ -35,14 +35,17 @@
 
 <script>
 import Header from "../components/Header";
-// import { getShoppingCarEvent } from "../api/api";
+import { getShoppingCarEvent } from "../api/api";
+// import { ref } from "@vue/reactivity";
 export default {
   name: "Favorite",
   components: { Header },
   setup() {
-    // getShoppingCarEvent().then((res) => {
-    //   console.log(res);
-    // });
+    getShoppingCarEvent().then((res) => {
+      const { shoppingCar } = res;
+      // localStorage.setItem("shoppingNum", JSON.stringify(shoppingCar.length));
+      console.log(shoppingCar);
+    });
   },
 };
 </script>

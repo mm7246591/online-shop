@@ -5,6 +5,7 @@ const store = createStore({
         return {
             items: [],
             isLoading: false,
+            shoppingNum: null,
             user: JSON.parse(localStorage.getItem("User")) ?
                 JSON.parse(localStorage.getItem("User")) :
                 "Guest",
@@ -59,6 +60,9 @@ const store = createStore({
         MAINTAIN_USER(state, payload) {
             //將登入者的資料重新賦予state，防止重整後，資料遺失
             state.user = payload;
+        },
+        GET_SHOPPINGNUM(state, payload) {
+            state.shoppingNum = payload;
         },
     },
 });

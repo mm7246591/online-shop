@@ -54,7 +54,7 @@ router.post("/signin", async(req, res) => {
 });
 /**
  * @route get /user/updata
- * @desci get user
+ * @desci send user
  * @access Public
  */
 router.get("/update", auth);

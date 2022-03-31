@@ -3,7 +3,8 @@ const router = express.Router();
 const Items = require("../models/items");
 const ShoppingCar = require("../models/shoppingCar");
 /**
- * @route get items
+ * @route get /items
+ * @desci send items
  * @access Public
  */
 router.get("/items", function(req, res) {
@@ -11,12 +12,17 @@ router.get("/items", function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            res.send({
+            res.status(200).json({
                 items: items,
             });
         }
     });
 });
+/**
+ * @route post /:name
+ * @desci get shoppingCar
+ * @access Public
+ */
 router.post("/:name", function(req, res) {
     const { username, token, name, size, num } = req.body;
     Items.findOne({ name: name }, async function(err, items) {
@@ -53,14 +59,30 @@ router.post("/:name", function(req, res) {
                 ],
                 token: token,
             });
+
             favoirte.save();
-            res.status(200).json({
-                message: "加入成功",
+            ShoppingCar.find({ token: token }, function(err, shoppingCar) {
+                res.status(200).json({
+                    shoppingCar: shoppingCar,
+                    message: "加入成功",
+                });
             });
         } catch (err) {
             res.status(401).json({ message: err });
         }
     });
 });
-//
+/**
+ * @route get /favorite
+ * @desci send shoppingCar
+ * @access Public
+ */
+router.get("/favorite", function(req, res) {
+    // const token = req.header("Authorization");
+    // ShoppingCar.find({ token: token }, function(err, shoppingCar) {
+    //     res.status(200).json({
+    //         shoppingCar: shoppingCar,
+    //     });
+    // });
+});
 module.exports = router;

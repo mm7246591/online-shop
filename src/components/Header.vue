@@ -1,6 +1,8 @@
 <template>
   <el-menu class="el-menu-demo" mode="horizontal">
-    <el-menu-item index="/"><router-link to="/">YanShop</router-link> </el-menu-item>
+    <el-menu-item index="/"
+      ><router-link :to="{ name: 'Home' }">YanShop</router-link>
+    </el-menu-item>
     <el-menu-item index="/Men">
       <router-link :to="{ name: 'Men' }"> MEN </router-link>
     </el-menu-item>
@@ -21,7 +23,9 @@
     <el-menu-item index="/Favorite">
       <i class="fa-solid fa-cart-shopping"></i>
       <router-link :to="{ name: 'Favorite' }">
-        <el-badge :value="200" :max="99" class="item">購物車</el-badge>
+        <el-badge :value="shoppingNum ? shoppingNum : num" :max="999" class="item"
+          >購物車</el-badge
+        >
       </router-link>
     </el-menu-item>
   </el-menu>
@@ -33,17 +37,17 @@ import { useStore, mapGetters, mapState } from "vuex";
 
 export default {
   name: "Header",
-  components: {},
   setup() {
     const store = useStore();
     const getStorage = computed(() => JSON.parse(localStorage.getItem("User")));
     const getUser = computed(() => store.getters.getUser);
     const userStatus = computed(() => getUser.value.status);
     const userName = computed(() => getUser.value.username);
-    return { getStorage, getUser, userStatus, userName };
+    const num = JSON.parse(localStorage.getItem("shoppingNum"));
+    return { getStorage, getUser, userStatus, userName, num };
   },
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "shoppingNum"]),
     ...mapGetters(["getUser"]),
   },
 };
