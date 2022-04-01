@@ -23,9 +23,7 @@
     <el-menu-item index="/Favorite">
       <i class="fa-solid fa-cart-shopping"></i>
       <router-link :to="{ name: 'Favorite' }">
-        <el-badge :value="shoppingNum ? shoppingNum : num" :max="999" class="item"
-          >購物車</el-badge
-        >
+        <el-badge :value="shoppingNum" :max="999" class="item">購物車</el-badge>
       </router-link>
     </el-menu-item>
   </el-menu>
@@ -43,8 +41,7 @@ export default {
     const getUser = computed(() => store.getters.getUser);
     const userStatus = computed(() => getUser.value.status);
     const userName = computed(() => getUser.value.username);
-    const num = JSON.parse(localStorage.getItem("shoppingNum"));
-    return { getStorage, getUser, userStatus, userName, num };
+    return { getStorage, getUser, userStatus, userName };
   },
   computed: {
     ...mapState(["user", "shoppingNum"]),

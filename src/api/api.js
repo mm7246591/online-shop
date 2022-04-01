@@ -21,9 +21,13 @@ export function updateUserEvent(params) {
 }
 // add shoppingCar
 export function homeItemEvent(params) {
-    return post("/api/:name", params);
+    return post("/api/home/:name", params);
 }
 // get shoppingCar
 export function getShoppingCarEvent() {
     return get("/api/favorite");
+}
+// delete shoppingCar
+export function deleteShoppingCarEvent(params) {
+    return post("/api/favorite", params);
 }

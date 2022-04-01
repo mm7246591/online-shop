@@ -23,7 +23,7 @@ router.get("/items", function(req, res) {
  * @desci get shoppingCar
  * @access Public
  */
-router.post("/:name", function(req, res) {
+router.post("/home/:name", function(req, res) {
     const { username, token, name, size, num } = req.body;
     Items.findOne({ name: name }, async function(err, items) {
         // if (size === "S" && items.S !== "0") {
@@ -47,29 +47,26 @@ router.post("/:name", function(req, res) {
         //         function(err, items) {}
         //     );
         // }
-        try {
-            let favoirte = await new ShoppingCar({
-                username: username,
-                favorites: [
-                    { name: name },
-                    { price: items.price },
-                    { size: size },
-                    { num: num },
-                    { img: items.img },
-                ],
-                token: token,
-            });
-
-            favoirte.save();
-            ShoppingCar.find({ token: token }, function(err, shoppingCar) {
-                res.status(200).json({
-                    shoppingCar: shoppingCar,
+        let favoirte = await new ShoppingCar({
+            username: username,
+            name: name,
+            price: items.price,
+            size: size,
+            num: num,
+            img: items.img,
+            token: token,
+        });
+        await favoirte.save();
+        ShoppingCar.find({ token: token }, async function(err, shoppingCar) {
+            if (err) {
+                console.log(err);
+            } else {
+                await res.status(200).json({
+                    shoppingNum: shoppingCar.length,
                     message: "加入成功",
                 });
-            });
-        } catch (err) {
-            res.status(401).json({ message: err });
-        }
+            }
+        });
     });
 });
 /**
@@ -78,11 +75,24 @@ router.post("/:name", function(req, res) {
  * @access Public
  */
 router.get("/favorite", function(req, res) {
-    // const token = req.header("Authorization");
-    // ShoppingCar.find({ token: token }, function(err, shoppingCar) {
-    //     res.status(200).json({
-    //         shoppingCar: shoppingCar,
-    //     });
-    // });
+    const token = req.header("Authorization");
+    ShoppingCar.find({ token: token }, function(err, shoppingCar) {
+        res.status(200).json({
+            shoppingCar: shoppingCar,
+        });
+    });
+});
+/**
+ * @route post /favorite
+ * @desci delete shoppingCar
+ * @access Public
+ */
+router.post("/favorite", function(req, res) {
+    const { id } = req.body;
+    ShoppingCar.findOneAndDelete({ id: id }, function(err, ShoppingCar) {
+        res.status(200).json({
+            message: "刪除成功",
+        });
+    });
 });
 module.exports = router;

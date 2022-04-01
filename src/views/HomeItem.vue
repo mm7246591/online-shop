@@ -98,9 +98,8 @@ export default {
       } else {
         homeItemEvent(form)
           .then((res) => {
-            const { message, shoppingCar } = res;
-            localStorage.setItem("shoppingNum", JSON.stringify(shoppingCar.length));
-            store.commit("GET_SHOPPINGNUM", shoppingCar.length);
+            const { message, shoppingNum } = res;
+            store.commit("GET_SHOPPINGNUM", shoppingNum);
             ElMessage({
               message: message,
               type: "success",

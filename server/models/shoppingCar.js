@@ -4,7 +4,21 @@ let ShoppingCarSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    favorites: [{}],
+    name: {
+        type: String,
+    },
+    price: {
+        type: String,
+    },
+    size: {
+        type: String,
+    },
+    num: {
+        type: String,
+    },
+    img: {
+        type: String,
+    },
     createAt: {
         type: Date,
         default: Date.now(),

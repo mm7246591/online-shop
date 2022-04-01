@@ -5,7 +5,9 @@ const store = createStore({
         return {
             items: [],
             isLoading: false,
-            shoppingNum: null,
+            shoppingNum: JSON.parse(localStorage.getItem("ShoppingNum")) ?
+                JSON.parse(localStorage.getItem("ShoppingNum")) :
+                0,
             user: JSON.parse(localStorage.getItem("User")) ?
                 JSON.parse(localStorage.getItem("User")) :
                 "Guest",
@@ -63,6 +65,13 @@ const store = createStore({
         },
         GET_SHOPPINGNUM(state, payload) {
             state.shoppingNum = payload;
+            localStorage.setItem("ShoppingNum", JSON.stringify(payload));
+        },
+        DELETE_SHOPPINGNUM(state, payload) {
+            let swap = state.shoppingNum;
+            swap = swap - payload;
+            localStorage.setItem("ShoppingNum", JSON.stringify(swap));
+            state.shoppingNum = swap;
         },
     },
 });

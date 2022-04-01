@@ -12,40 +12,63 @@
             <div class="operate">操作</div>
           </div>
         </div>
-        <div class="itemList">
+        <el-form class="itemList" v-for="item of items" :key="item._id">
           <div class="item">
             <img src="https://fakeimg.pl/80x80/" />
-            <div class="name">男裝 U AIRism棉質寬版圓領T恤(五分袖)</div>
+            <div class="name">{{ item.name }}</div>
           </div>
           <div class="group">
-            <div class="price">$790</div>
+            <div class="price">{{ item.price }}</div>
             <div class="count">
-              <el-input-number :min="1" :max="10" />
+              <el-input-number v-model="form.num" :min="1" :max="Number(item.num)" />
             </div>
-            <div class="total">NT$1,300</div>
+            <div class="total">{{ item.price }}</div>
             <div class="operate">
-              <button>刪除</button>
+              <el-button @click="deleteEvent(item._id)">刪除</el-button>
             </div>
           </div>
-        </div>
+        </el-form>
       </div>
     </el-main>
   </el-container>
 </template>
 
 <script>
+import { ElMessage } from "element-plus";
+import { getShoppingCarEvent, deleteShoppingCarEvent } from "../api/api";
+import { onMounted, reactive, ref } from "vue";
 import Header from "../components/Header";
-import { getShoppingCarEvent } from "../api/api";
-// import { ref } from "@vue/reactivity";
+import { useStore } from "vuex";
+
 export default {
   name: "Favorite",
   components: { Header },
   setup() {
-    getShoppingCarEvent().then((res) => {
-      const { shoppingCar } = res;
-      // localStorage.setItem("shoppingNum", JSON.stringify(shoppingCar.length));
-      console.log(shoppingCar);
+    const form = reactive({
+      id: null,
+      num: null,
     });
+    const items = ref(null);
+    const store = useStore();
+    onMounted(() => {
+      getShoppingCarEvent().then((res) => {
+        const { shoppingCar } = res;
+        items.value = shoppingCar;
+      });
+    });
+    const deleteEvent = (id) => {
+      form.id = id;
+      deleteShoppingCarEvent(form).then((res) => {
+        const { message } = res;
+        ElMessage({
+          message: message,
+          type: "success",
+        });
+        store.commit("DELETE_SHOPPINGNUM", 1);
+        items.value = items.value.filter((item) => item._id !== id);
+      });
+    };
+    return { form, items, deleteEvent };
   },
 };
 </script>
@@ -56,11 +79,10 @@ export default {
 .el-main {
   height: 100vh;
   background-color: rgb(228, 228, 228);
-  overflow-y: hidden;
 }
 .container {
   width: 1200px;
-  height: 700px;
+  height: 100%;
   margin: auto;
 }
 .itemHeader {
@@ -89,6 +111,7 @@ export default {
 .itemList {
   width: 100%;
   height: auto;
+  margin: 10px 0;
   background-color: white;
   display: flex;
   justify-content: space-around;
