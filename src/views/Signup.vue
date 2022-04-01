@@ -5,7 +5,7 @@
       <div class="container">
         <div class="signUp">
           <span>Sign up</span>
-          <el-form ref="ruleForm" v-model="form" :rules="formRules">
+          <el-form ref="ruleForm" :model="form" :rules="formRules">
             <el-form-item label="帳號" prop="username">
               <el-input
                 v-model.trim="form.username"
@@ -61,7 +61,7 @@ export default {
     });
     const ruleForm = ref(null);
     const usernameReg = ref(/^[a-zA-Z0-9]+$/);
-    const passwordReg = ref(/^.{1,5}$/);
+    const passwordReg = ref(/^.{3,10}$/);
     const phoneReg = ref(/^09[0-9]{8}$/);
     const validateUsername = (rule, value, callback) => {
       if (!form.username) {
@@ -101,6 +101,9 @@ export default {
       password: [{ required: true, validator: validatePassword, trigger: "blur" }],
       phone: [{ required: true, validator: validatePhone, trigger: "blur" }],
     });
+    const abc = () => {
+      console.log(123);
+    };
     const onSubmit = async () => {
       await ruleForm.value.validate((valid) => {
         if (valid) {
@@ -130,6 +133,7 @@ export default {
       form,
       ruleForm,
       formRules,
+      abc,
       onSubmit,
     };
   },

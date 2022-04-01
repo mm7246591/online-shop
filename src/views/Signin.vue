@@ -5,7 +5,7 @@
       <div class="container">
         <div class="signIn">
           <span>Sign in</span>
-          <el-form ref="ruleForm" v-model="form" :rules="formRules">
+          <el-form ref="ruleForm" :model="form" :rules="formRules">
             <el-form-item label="帳號" prop="username">
               <el-input v-model.trim="form.username" type="text" clearable>
                 <template #prefix>
@@ -55,7 +55,6 @@ export default {
       username: [{ required: true, message: "請輸入帳號", trigger: "blur" }],
       password: [{ required: true, message: "請輸入密碼", trigger: "blur" }],
     });
-
     const onSubmit = async () => {
       await ruleForm.value.validate((valid) => {
         if (valid) {

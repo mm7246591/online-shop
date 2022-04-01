@@ -30,9 +30,10 @@ const routes = [{
         component: Men,
     },
     {
-        path: "/men/:id",
+        path: "/men/:name",
         name: "MenItem",
         component: MenItem,
+        props: true,
     },
     {
         path: "/women",
@@ -40,9 +41,10 @@ const routes = [{
         component: Women,
     },
     {
-        path: "/women/:id",
+        path: "/women/:name",
         name: "WomenItem",
         component: WomenItem,
+        props: true,
     },
     {
         path: "/kids",
@@ -50,9 +52,10 @@ const routes = [{
         component: Kids,
     },
     {
-        path: "/kids/:id",
+        path: "/kids/:name",
         name: "KidsItem",
         component: KidsItem,
+        props: true,
     },
     {
         path: "/user",

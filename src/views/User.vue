@@ -93,6 +93,7 @@ export default {
         localStorage.removeItem("Authorization");
         localStorage.removeItem("User");
         localStorage.removeItem("preRoute");
+        localStorage.removeItem("shoppingNum");
         router.push("/");
       });
     };

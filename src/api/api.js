@@ -23,6 +23,18 @@ export function updateUserEvent(params) {
 export function homeItemEvent(params) {
     return post("/api/home/:name", params);
 }
+// add shoppingCar
+export function MenItemEvent(params) {
+    return post("/api/men/:name", params);
+}
+// add shoppingCar
+export function WomenItemEvent(params) {
+    return post("/api/women/:name", params);
+}
+// add shoppingCar
+export function KidsItemEvent(params) {
+    return post("/api/kids/:name", params);
+}
 // get shoppingCar
 export function getShoppingCarEvent() {
     return get("/api/favorite");
