@@ -2,6 +2,6 @@
 
 ## Project setup
 
-- vue
-- node
-- mongodb
+- vue create vue-project
+- npm install node.js
+- npm install mongodb
