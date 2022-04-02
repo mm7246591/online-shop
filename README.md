@@ -1,24 +1,11 @@
-# self-management
+# onlie-shop
 
 ## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
 ```
-npm run serve
-```
+* vue
 
-### Compiles and minifies for production
-```
-npm run build
-```
+* node
 
-### Lints and fixes files
+*mongodb
 ```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
