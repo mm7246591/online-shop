@@ -2,10 +2,6 @@
 
 ## Project setup
 
-```
-* vue
-
-* node
-
-*mongodb
-```
+- vue
+- node
+- mongodb
