@@ -4,7 +4,7 @@ vue.config.js
 /dist
 # local env files
 .env
-
+data.json
 # Log files
 npm-debug.log*
 yarn-debug.log*
