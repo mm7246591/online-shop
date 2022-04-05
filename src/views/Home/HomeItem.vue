@@ -38,9 +38,9 @@
 import { ElMessage } from "element-plus";
 import { reactive, computed, onMounted } from "vue";
 import { useStore, mapState } from "vuex";
-import { homeItemEvent } from "../api/api";
-import Header from "../components/Header";
-import router from "../router";
+import { homeItemEvent } from "../../api/api";
+import Header from "../../components/Header";
+import router from "../../router";
 
 export default {
   name: "HomeItem",

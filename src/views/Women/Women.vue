@@ -9,7 +9,7 @@
             <div class="img">
               <router-link
                 :to="{
-                  path: `/men/${item.name}`,
+                  path: `/women/${item.name}`,
                   query: {
                     name: item.name,
                   },
@@ -42,8 +42,8 @@
 <script>
 import { computed, onMounted, ref } from "vue";
 import { useStore, mapGetters } from "vuex";
-import Header from "../components/Header";
-import SideBar from "../components/SideBar";
+import Header from "../../components/Header";
+import SideBar from "../../components/SideBar";
 
 export default {
   name: "Home",
@@ -64,12 +64,12 @@ export default {
     const pageSize = ref(7);
     const displayData = computed(() => {
       if (category.value === "") {
-        return store.getters.menItems.slice(
+        return store.getters.womenItems.slice(
           pageSize.value * page.value - pageSize.value,
           pageSize.value * page.value
         );
       }
-      return store.getters.menItems.filter((item) =>
+      return store.getters.womenItems.filter((item) =>
         item.category.includes(category.value)
       );
     });
@@ -90,19 +90,18 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["menItems"]),
+    ...mapGetters(["womenItems"]),
   },
 };
 </script>
 <style scoped>
-.el-header {
-  margin-top: 10px;
-}
 .el-main {
   height: 100vh;
   overflow: hidden;
 }
-
+.el-header {
+  margin-top: 10px;
+}
 .container {
   width: 100%;
   display: grid;
@@ -128,6 +127,7 @@ export default {
 .item:hover .img img {
   transform: scale(1.1);
 }
+
 .item .text {
   color: #646565;
   font-size: 18px;

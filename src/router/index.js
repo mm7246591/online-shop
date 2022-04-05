@@ -1,17 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home";
-import HomeItem from "../views/HomeItem";
-import Men from "../views/Men";
-import MenItem from "../views/MenItem";
-import Women from "../views/Women";
-import WomenItem from "../views/WomenItem";
-import Kids from "../views/Kids";
-import KidsItem from "../views/KidsItem";
-import User from "../views/User.vue";
-import Signin from "../views/Signin";
-import Signup from "../views/Signup";
+import Home from "../views/Home/Home";
+import HomeItem from "../views/Home/HomeItem";
+import Men from "../views/Men/Men";
+import MenItem from "../views/Men/MenItem";
+import Women from "../views/Women/Women";
+import WomenItem from "../views/Women/WomenItem";
+import Kids from "../views/Kids/Kids";
+import KidsItem from "../views/Kids/KidsItem";
+import User from "../views/User/User";
+import Signin from "../views/User/Signin";
+import Signup from "../views/User/Signup";
 import Favorite from "../views/Favorite";
-// import store from "../store";
 
 const routes = [{
         path: "/",

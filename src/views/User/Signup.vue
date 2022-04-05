@@ -45,10 +45,10 @@
 
 <script>
 import { reactive, ref } from "vue";
-import { signupEvent } from "../api/api.js";
+import { signupEvent } from "../../api/api";
 import { ElMessage } from "element-plus";
-import Header from "../components/Header";
-import router from "../router/index.js";
+import Header from "../../components/Header";
+import router from "../../router";
 
 export default {
   name: "Signup",

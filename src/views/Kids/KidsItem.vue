@@ -38,12 +38,12 @@
 import { ElMessage } from "element-plus";
 import { reactive, computed, onMounted } from "vue";
 import { useStore, mapState } from "vuex";
-import { WomenItemEvent } from "../api/api";
-import Header from "../components/Header";
-import router from "../router";
+import { KidsItemEvent } from "../../api/api";
+import Header from "../../components/Header";
+import router from "../../router";
 
 export default {
-  name: "WomenItem",
+  name: "KidsItem",
   props: ["name"],
   components: {
     Header,
@@ -96,7 +96,7 @@ export default {
         );
         router.push({ name: "Signin" });
       } else {
-        WomenItemEvent(form)
+        KidsItemEvent(form)
           .then((res) => {
             const { message, shoppingNum } = res;
             store.commit("GET_SHOPPINGNUM", shoppingNum);

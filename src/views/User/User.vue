@@ -26,10 +26,10 @@
 
 <script>
 import { ElMessageBox, ElMessage } from "element-plus";
-import router from "../router/index";
 import { ref, reactive } from "@vue/reactivity";
-import { userEvent, updateUserEvent } from "../api/api";
-import Header from "../components/Header";
+import { userEvent, updateUserEvent } from "../../api/api";
+import Header from "../../components/Header";
+import router from "../../router";
 export default {
   name: "User",
   components: { Header },

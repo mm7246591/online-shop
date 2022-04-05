@@ -20,7 +20,11 @@
           <div class="group">
             <div class="price">{{ item.price }}</div>
             <div class="count">
-              <el-input-number v-model="form.num" :min="1" :max="Number(item.num)" />
+              <el-input-number
+                v-model="form.num"
+                :min="1"
+                :max="Number(item.num)"
+              />
             </div>
             <div class="total">{{ item.price }}</div>
             <div class="operate">
