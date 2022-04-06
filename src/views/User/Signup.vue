@@ -101,9 +101,6 @@ export default {
       password: [{ required: true, validator: validatePassword, trigger: "blur" }],
       phone: [{ required: true, validator: validatePhone, trigger: "blur" }],
     });
-    const abc = () => {
-      console.log(123);
-    };
     const onSubmit = async () => {
       await ruleForm.value.validate((valid) => {
         if (valid) {
@@ -133,7 +130,6 @@ export default {
       form,
       ruleForm,
       formRules,
-      abc,
       onSubmit,
     };
   },
