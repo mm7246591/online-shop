@@ -61,26 +61,23 @@ export default {
     });
     const category = ref("");
     const page = ref(1);
-    const pageSize = ref(14);
+    const pageSize = ref(7);
     const displayData = computed(() => {
-      if (category.value === "") {
-        return store.state.items.slice(
-          pageSize.value * page.value - pageSize.value,
-          pageSize.value * page.value
-        );
+      if (category.value) {
+        return store.state.items.filter((item) => item.category.includes(category.value));
       }
-      return store.state.items.filter((item) => item.category.includes(category.value));
+      return store.state.items.slice(
+        pageSize.value * page.value - pageSize.value,
+        pageSize.value * page.value
+      );
     });
-    // const total = computed(() => {
-    //   if (displayData.value.length < pageSize.value) {
-    //     return displayData.value.length;
-    //   }
-    //   return store.state.items.length;
-    // });
     const setPage = (val) => {
       page.value = val;
     };
     const getCategory = (val) => {
+      if (val) {
+        pageSize.value = store.state.items.length;
+      }
       category.value = val;
     };
     return {

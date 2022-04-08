@@ -29,7 +29,7 @@
         </div>
         <el-pagination
           :page-size="pageSize"
-          :total="total"
+          :total="kidItems"
           layout="prev, pager, next"
           @current-change="setPage"
         >
@@ -63,27 +63,23 @@ export default {
     const page = ref(1);
     const pageSize = ref(7);
     const displayData = computed(() => {
-      if (category.value === "") {
-        return store.getters.kidItems.slice(
-          pageSize.value * page.value - pageSize.value,
-          pageSize.value * page.value
+      if (category.value) {
+        return store.getters.kidItems.filter((item) =>
+          item.category.includes(category.value)
         );
       }
-      return store.getters.kidItems.filter((item) =>
-        item.category.includes(category.value)
+      return store.getters.kidItems.slice(
+        pageSize.value * page.value - pageSize.value,
+        pageSize.value * page.value
       );
     });
-    const total = computed(() => {
-      if (displayData.value.length < pageSize.value) {
-        return displayData.value.length;
-      }
-      return store.state.items.length;
-    });
     const setPage = (val) => {
-      console.log(val);
       page.value = val;
     };
     const getCategory = (val) => {
+      if (val) {
+        pageSize.value = store.state.kidItems.length;
+      }
       category.value = val;
     };
     return {
@@ -91,7 +87,6 @@ export default {
       page,
       pageSize,
       displayData,
-      total,
       setPage,
       getCategory,
     };
