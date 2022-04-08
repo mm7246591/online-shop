@@ -1,9 +1,9 @@
 const express = require("express");
-// const session = require("express-session");
+const session = require("express-session");
 const itemRouter = require("./routes/items");
 const userRouter = require("./routes/users");
 const cors = require("cors");
-// const MongoStore = require("connect-mongo");
+const MongoStore = require("connect-mongo");
 const path = require("path");
 const app = express();
 require("dotenv").config();
@@ -19,14 +19,14 @@ dataBase.on("err", function(err) {
     console.log(err);
 });
 // session
-// app.use(
-//     session({
-//         secret: process.env.JWT_SECRET,
-//         store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL }),
-//         resave: "false",
-//         saveUninitialized: "false",
-//     })
-// );
+app.use(
+    session({
+        secret: process.env.JWT_SECRET,
+        store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL }),
+        resave: "false",
+        saveUninitialized: "false",
+    })
+);
 // setup the static directory
 app.use(express.static(path.join(__dirname, "public")));
 // Middleware
