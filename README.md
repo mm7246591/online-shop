@@ -1,4 +1,4 @@
-# -:star2: online-shop
+# -:star2: online-shop with Vue3+Node+Mongodb
 
 You can register/login and add shoppingCar
 
