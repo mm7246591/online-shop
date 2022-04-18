@@ -1,4 +1,6 @@
-# -:star2: You can register/login and add shoppingCar
+# -:star2: online-shop
+
+You can register/login and add shoppingCar
 
 ## Project setup
 
