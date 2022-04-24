@@ -50,7 +50,6 @@ app.all("*", function(req, res, next) {
 // router
 app.use("/", itemRouter);
 app.use("/user", userRouter);
-
 const port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log("Server started on port 3000");

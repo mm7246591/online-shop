@@ -38,7 +38,7 @@ const store = createStore({
                 commit("GET_DATA", await itemsEvent());
                 await setTimeout(() => {
                     commit("LOADING", false);
-                }, 500);
+                }, 300);
             } catch (err) {
                 console.error(err);
             }

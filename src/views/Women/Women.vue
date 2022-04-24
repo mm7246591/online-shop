@@ -29,7 +29,7 @@
         </div>
         <el-pagination
           :page-size="pageSize"
-          :total="items.length"
+          :total="womenItems.length"
           layout="prev, pager, next"
           @current-change="setPage"
         >
@@ -78,9 +78,9 @@ export default {
       page.value = val;
     };
     const getCategory = (val) => {
-      if (val) {
-        pageSize.value = store.state.womenItems.length;
-      }
+      // if (val) {
+      //   pageSize.value = store.state.womenItems.length;
+      // }
       category.value = val;
     };
     return {
