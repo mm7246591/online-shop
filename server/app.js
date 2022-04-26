@@ -36,12 +36,12 @@ app.use(express.urlencoded({ extended: false }));
 // cors
 app.use(
     cors({
-        origin: ["http://localhost:8080"],
+        origin: process.env.CORS_ROUTER,
         methods: ["GET", "POST"],
     })
 );
 app.all("*", function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Origin", process.env.CORS_ROUTER);
     res.header("Access-Control-Allow-Headers", "Content-Type");
     res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
     next();
@@ -51,6 +51,7 @@ app.all("*", function(req, res, next) {
 app.use("/", itemRouter);
 app.use("/user", userRouter);
 const port = process.env.PORT || 3000;
-app.listen(port, function() {
-    console.log("Server started on port 3000");
+app.listen(port, () => {
+    // do not add localhost here if you are deploying it
+    console.log("server listening to port " + port);
 });

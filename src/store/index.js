@@ -4,7 +4,6 @@ const store = createStore({
     state() {
         return {
             items: [],
-            isLoading: false,
             shoppingNum: JSON.parse(localStorage.getItem("ShoppingNum")) ?
                 JSON.parse(localStorage.getItem("ShoppingNum")) :
                 0,
@@ -33,12 +32,8 @@ const store = createStore({
     actions: {
         async getData({ commit }) {
             commit("MAINTAIN_USER", JSON.parse(localStorage.getItem("User")));
-            commit("LOADING", true);
             try {
                 commit("GET_DATA", await itemsEvent());
-                await setTimeout(() => {
-                    commit("LOADING", false);
-                }, 300);
             } catch (err) {
                 console.error(err);
             }
@@ -47,9 +42,6 @@ const store = createStore({
     mutations: {
         GET_DATA(state, payload) {
             state.items = payload.items;
-        },
-        LOADING(state, payload) {
-            state.isLoading = payload;
         },
         SET_TOKEN(state, payload) {
             state.Authorization = payload;

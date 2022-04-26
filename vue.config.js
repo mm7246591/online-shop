@@ -3,7 +3,7 @@ module.exports = {
         //設定完成後重啟npm
         proxy: {
             "/api": {
-                target: "http://localhost:3000",
+                target: "https://online-shop-yan.herokuapp.com/",
                 pathRewrite: {
                     "^/api": "", //萬用字元
                 },

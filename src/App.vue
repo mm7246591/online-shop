@@ -1,10 +1,8 @@
 <template>
-  <div v-loading="isLoading" element-loading-background="rgba(0, 0, 0, 0.7)">
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 <script>
-import { useStore, mapState } from "vuex";
+import { useStore } from "vuex";
 export default {
   name: "App",
   setup() {
@@ -15,9 +13,6 @@ export default {
       }
     });
     return { store };
-  },
-  computed: {
-    ...mapState(["isLoading"]),
   },
 };
 </script>
