@@ -14,4 +14,6 @@ You can register/login and add shoppingCar
 
 ## Demo
 
+I used heroku so web would delay few seconds.Please wait a moment. 
+
 - https://onlien-shop.netlify.app/
